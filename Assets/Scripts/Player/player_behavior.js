@@ -26,7 +26,7 @@ static var extralifes: int;
 
 function Start () { //Dando valor as variaveis
 
-	FadeInOutBehaviour.playfadeIn = true; // transação da tela
+	FadeInOutBehaviour.playfadeIn = true; // transação da 
 
     canDamage = true;
     canMove = true;
