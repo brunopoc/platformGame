@@ -3,21 +3,18 @@ using System.Collections;
 
 public class Enemy_Pip : MonoBehaviour {
 
-    static Animator anima;
-    Rigidbody2D enemy; 
-    float timeToAttack;
-    float countToAttack;
-    float timeToReceive;
-    int life;
-    GameObject bullet;
-    Vector3 bullet_position;
-    float contAnimator;
+    public Animator anima;
+    public GameObject bullet;
 
-    public bullet_behavior bullet_behavior;
+    public int life;
+    public float timeToAttack;
+    public float countToAttack;
+    public float timeToReceive;
+    public float contAnimator;
+    Rigidbody2D enemy;
+    Vector3 bullet_position;
 
     void Start (){
-
-        bullet_behavior = GameObject.Find("bullet").GetComponent<bullet_behavior>();
 
         countToAttack = 0;
         timeToReceive = 0;
@@ -51,7 +48,7 @@ public class Enemy_Pip : MonoBehaviour {
     void OnTriggerEnter2D ( Collider2D coll  ){
         if(coll.gameObject.tag == "HeroBullet"){
             life--;
-            bullet_behavior.bullet_die = true;
+            bullet.GetComponent<bullet_behavior>().bullet_die = true;
             timeToReceive = 0;
         }
     }

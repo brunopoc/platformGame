@@ -4,16 +4,14 @@ using System.Collections;
 public class bullet_behavior : MonoBehaviour {
 
     GameObject bullet;
-    float timecont;
-    float velocidade;
+    float timecont = 0;
+    public float velocidade;
     public bool  bullet_die;
-    float destroyItNow;
-    public dialog dialog;
+    public float destroyItNow;
     public player_behavior player_behavior;
 
     void Start (){
-        timecont = 0;
-        dialog = GameObject.Find("Player").GetComponent<dialog>();
+        bullet = this.gameObject;
         player_behavior = GameObject.Find("Player").GetComponent<player_behavior>();
     }
 

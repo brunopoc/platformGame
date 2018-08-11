@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class dialog : MonoBehaviour {
 
-Text dialogText; //Campo de Texo do Hud
+public Text dialogText; //Campo de Texo do Hud
 private string str; //Variável que o método utiliza para passar o texto para o componente de texto do HUD
 Animator anima; //Animação que exibe o campo de dialogo
 

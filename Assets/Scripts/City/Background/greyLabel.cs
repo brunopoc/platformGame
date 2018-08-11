@@ -4,8 +4,8 @@ using System.Collections;
 public class greyLabel : MonoBehaviour {
 
     float movement;
-    GameObject blackObject;
     Vector3 direction;
+    public GameObject blackObject;
     public dialog dialog;
     public player_behavior player_behavior;
 

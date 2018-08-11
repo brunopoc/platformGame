@@ -28,7 +28,6 @@ public class FadeInOutBehaviour : MonoBehaviour {
     }
 
     IEnumerator fadeIn (){
-        Debug.Log("aqui");
         for (t = 0; t < duration; t+= Time.deltaTime){
 	        renderoption.material.color = Color.Lerp(colorStart, colorEnd, t/duration);
 	        yield return 0;

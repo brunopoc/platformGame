@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class blackLabel : MonoBehaviour {
-    GameObject blackObject;
     float movement;
     Vector3 direction;
+
+    public GameObject blackObject;
     public dialog dialog;
     public player_behavior player_behavior;
 

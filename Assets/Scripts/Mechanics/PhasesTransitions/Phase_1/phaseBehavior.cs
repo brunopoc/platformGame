@@ -15,12 +15,13 @@ public class phaseBehavior : MonoBehaviour {
     }
 
     void Update (){
-	
+	    /*
 	    if(player_onmap.phase1_clear == true){
 		    renderer1.color = new Color(0f, 0f, 0f, 1f);
 		    renderer2.color = new Color(0f, 0f, 0f, 1f);
 		    renderer3.color = new Color(0f, 0f, 0f, 1f);
 		    renderer4.color = new Color(0f, 0f, 0f, 1f);
 	    }
+        */
     }
 }

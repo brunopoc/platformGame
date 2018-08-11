@@ -9,13 +9,13 @@ public class player_behavior : MonoBehaviour {
 
     public float velocidade;           //Velocidade
     public float jumpvel;              //Velocidade de pulo
-    public float contDamage;           // Contador para o dano
     public Rigidbody2D player;         //Persongaem
     public Animator anime;             //Animação do personagem
     public bool canDamage;             //Pode Receber Dano
     public bool canMove;
     public bool OnGround;              //Esta no chão
     public bool canDash;              //Esta no chão
+    float contDamage;           // Contador para o dano
 
     public GameObject bullet;          //Munição do personagem
     public Vector3 bullet_position;    //Posição onde a bala é instanciada
@@ -43,26 +43,26 @@ public class player_behavior : MonoBehaviour {
         player = GetComponent<Rigidbody2D>();
         anime = GetComponentInChildren<Animator>();
 
-        contDamage = 0;
     }
 
     void Update (){
         PlayerJump(); //Função que habilita o pulo
         PlayerWalk(); //Player Andando
-        PlayerReceiveDamage(); //Jogador Recebendo Dano
         PlayerShooting(); //Jogador Atirando
         PlayerDash();
+        StartCoroutine(PlayerReceiveDamage()); //Jogador Recebendo Dano
     }
 
     IEnumerator PlayerReceiveDamage (){
         if(canDamage == false){ //CONTADOR PARA RECEBER DANO
         	anime.SetBool("damage", true);
-            contDamage += Time.deltaTime;                 
+            contDamage += Time.deltaTime;   
 	        if(contDamage > 0.5f){
 	            player_lifebar.currentlife--;
 	            canDamage = true;
 	            anime.SetBool("damage", false); //Animação
 	            contDamage = 0;
+                yield break;
             } 
         }
         if(player_lifebar.currentlife == 0){

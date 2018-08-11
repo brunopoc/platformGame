@@ -1,76 +1,84 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class player_onmap : MonoBehaviour {
 
+    UnityEngine.SceneManagement.SceneManager newScene;
 
+    Rigidbody2D player;  //Personagem
+    Animator anime; //Animação do personagem
+    GameObject phase1_block;
 
-Rigidbody2D player;  //Personagem
-float velocidade; //Velocidade
-Animator anime; //Animação do personagem
-UnityEngine.SceneManagement.SceneManager newScene;
-bool  onPhase_1;
-static bool  phase1_clear;
-GameObject phase1_block;
-float duration;
-bool  checkTrans;
-void Start (){
-	player = GetComponent<Rigidbody2D>();
-	velocidade = 0.5f;
-	anime = GetComponent<Animator>();
-	FadeInOutBehaviour.playfadeIn = true;
-	checkTrans = false;
-}
+    float velocidade = 0.5f; //Velocidade
+    float duration;
+    bool onPhase_1;
+    bool checkTrans;
+    bool phase1_clear;
 
-void Update (){
-	playerWalkonMap();
-	animaController();
-	StartCoroutine(phase_1_clear());
-	if(onPhase_1 == true && Input.GetKeyDown("z")){
-	FadeInOutBehaviour.playfadeOut = true;
-	checkTrans = true;
-	}
-	if(duration >= 1 && checkTrans == true){
-		 			newScene.LoadScene("phase_1");
-		 		} else if(checkTrans == true) {
-		 			duration += Time.deltaTime;
-		 		}
-}
+    // ----------------- VARIAVEIS PARA ARMAZENAR SCRIPTS ---------------
 
-void playerWalkonMap (){
+    public FadeInOutBehaviour FadeInOutBehaviour;
 
-	player.velocity.x = velocidade * Input.GetAxis("Horizontal");
-	player.velocity.y = velocidade * Input.GetAxis("Vertical");
-}
+    void Start (){
 
-void animaController (){
+        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
 
-	if (player.velocity.x != 0){
-	anime.SetFloat("horizontal", Input.GetAxis("Horizontal"));
-	anime.SetBool("direction", false);
-	}
-	if (player.velocity.y != 0){
-	anime.SetFloat("vertical", Input.GetAxis("Vertical"));
-	anime.SetBool("direction", true);
-	}
-}
-
-void OnTriggerEnter2D ( Collider2D coll  ){
-    if(coll.gameObject.tag == "phase_1"){
-    	onPhase_1 = true;
-    }
+        player = GetComponent<Rigidbody2D>();
+        anime = GetComponent<Animator>();
+	    
+	    FadeInOutBehaviour.playfadeIn = true;
+	    checkTrans = false;
     }
 
-void OnTriggerExit2D ( Collider2D coll  ){
-    if(coll.gameObject.tag == "phase_1"){
-    	onPhase_1 = false;
-    }
+    void Update (){
+	    playerWalkonMap();
+	    animaController();
+	    StartCoroutine(phase_1_clear());
+	    if(onPhase_1 == true && Input.GetKeyDown("z")){
+	    FadeInOutBehaviour.playfadeOut = true;
+	    checkTrans = true;
+	    }
+	    if(duration >= 1 && checkTrans == true){
+            SceneManager.LoadScene("phase_1");
+		} else if(checkTrans == true) {
+		 	duration += Time.deltaTime;
+		}
     }
 
-IEnumerator phase_1_clear (){
+    void playerWalkonMap (){
+	    player.velocity = new Vector2(velocidade * Input.GetAxis("Horizontal"), player.velocity.y);
+	    player.velocity = new Vector2 (player.velocity.x, velocidade * Input.GetAxis("Vertical"));
+    }
+
+    void animaController (){
+
+	    if (player.velocity.x != 0){
+	        anime.SetFloat("horizontal", Input.GetAxis("Horizontal"));
+	        anime.SetBool("direction", false);
+	    }
+	    if (player.velocity.y != 0){
+	        anime.SetFloat("vertical", Input.GetAxis("Vertical"));
+	        anime.SetBool("direction", true);
+	    }
+    }
+
+    void OnTriggerEnter2D ( Collider2D coll  ){
+        if(coll.gameObject.tag == "phase_1"){
+    	    onPhase_1 = true;
+        }
+    }
+
+    void OnTriggerExit2D ( Collider2D coll  ){
+        if(coll.gameObject.tag == "phase_1"){
+    	    onPhase_1 = false;
+        }
+    }
+
+    IEnumerator phase_1_clear (){
 		if(Input.GetKeyDown("m")){
-		yield return WaitForSeconds(6);
+		yield return new WaitForSeconds(6);
 			phase1_block.SetActive(false);
 		}
-}
+    }
 }
