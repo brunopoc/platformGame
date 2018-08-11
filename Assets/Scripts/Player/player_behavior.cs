@@ -12,8 +12,8 @@ public class player_behavior : MonoBehaviour {
     public float contDamage;           // Contador para o dano
     public Rigidbody2D player;         //Persongaem
     public Animator anime;             //Animação do personagem
-    static bool canDamage;             //Pode Receber Dano
-    static bool canMove;
+    public bool canDamage;             //Pode Receber Dano
+    public bool canMove;
     public bool OnGround;              //Esta no chão
     public bool canDash;              //Esta no chão
 
@@ -94,11 +94,11 @@ public class player_behavior : MonoBehaviour {
                 if(player.transform.localScale.x == 1){
                     bullet_position.x = 0.41f + player.transform.position.x;
                     bullet_position.y = 0.15f + player.transform.position.y;
-                    bullet.transform.localScale = new Vector3(1, 0, 0);
+                    bullet.transform.localScale = new Vector3(1, 1, 1);
                 } else {
                     bullet_position.x = -0.41f + player.transform.position.x;
                     bullet_position.y = 0.15f + player.transform.position.y;
-                    bullet.transform.localScale = new Vector3(-1, 0, 0);
+                    bullet.transform.localScale = new Vector3(-1, 1, 1);
                 }
                 Instantiate(bullet, bullet_position,  Quaternion.identity);
             }

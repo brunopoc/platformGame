@@ -61,18 +61,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Characters\jennydialog.cs" />
+    <Compile Include="Assets\Scripts\City\Background\blackLabel.cs" />
+    <Compile Include="Assets\Scripts\City\Background\greyLabel.cs" />
+    <Compile Include="Assets\Scripts\Enemy\bullet_behavior.cs" />
+    <Compile Include="Assets\Scripts\Enemy\enemy_ninja.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Enemy_Pip.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\BD\dataBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\CameraBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\dialog.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\EndofPhases\Phase 1\phase1_check.cs" />
     <Compile Include="Assets\Scripts\Mechanics\FadeInOutBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\jumpTo.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\MouseBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\PhasesTransitions\Phase_1\phaseBehavior.cs" />
+    <Compile Include="Assets\Scripts\Mechanics\ScenesManager.cs" />
     <Compile Include="Assets\Scripts\Player\player_behavior.cs" />
     <Compile Include="Assets\Scripts\Player\player_lifebar.cs" />
-    <None Include="Assets\JStoC\readme.txt" />
+    <Compile Include="Assets\Scripts\Player\player_onmap.cs" />
+    <Compile Include="Assets\Scripts\Player\walk.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/camis/Documents/Bruno/platformGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/camis/Documents/Bruno/platformGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/camis/Documents/Bruno/platformGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>C:/Users/camis/Documents/Bruno/platformGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/camis/Documents/Bruno/platformGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
