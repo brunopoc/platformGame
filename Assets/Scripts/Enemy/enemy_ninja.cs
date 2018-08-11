@@ -12,13 +12,11 @@ public class enemy_ninja : MonoBehaviour {
     bool  attackPlayer;
     float timeToReceive;
     public FadeInOutBehaviour FadeInOutBehaviour;
-    public bullet_behavior bullet_behavior;
 
     static Animator anima;
 
     void Start (){
         FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
-        bullet_behavior = GameObject.Find("bullet").GetComponent<bullet_behavior>();
 
         FadeInOutBehaviour.playfadeIn = true; // transação da tela
         anima = GetComponentInChildren<Animator>();
@@ -38,8 +36,8 @@ public class enemy_ninja : MonoBehaviour {
         if(timeToReceive >= 1){
   		    anima.SetBool("recebendo", false);
         }else{
-        timeToReceive += Time.deltaTime;
-        enemy.transform.Translate (0,0,0);
+            timeToReceive += Time.deltaTime;
+            enemy.transform.Translate (0,0,0);
         }
 
         if(life <= 0){
@@ -85,7 +83,7 @@ public class enemy_ninja : MonoBehaviour {
         if(coll.gameObject.tag == "HeroBullet"){
             life--;
             anima.SetBool("recebendo", true);
-            bullet_behavior.bullet_die = true;
+            coll.gameObject.GetComponent<bullet_behavior>().bullet_die = true;
             timeToReceive = 0;
         }
         if(coll.gameObject.tag == "Player" && attackPlayer == false){       

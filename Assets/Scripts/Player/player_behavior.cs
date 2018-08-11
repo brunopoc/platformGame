@@ -146,7 +146,7 @@ public class player_behavior : MonoBehaviour {
     }
 
     IEnumerator animatorPlayerControl (){
-    if(canDamage == false || canMove == false){ //FICA PARADO ENQUANTO NÃO PUDER RECEBER DANO
+        if(canDamage == false || canMove == false){ //FICA PARADO ENQUANTO NÃO PUDER RECEBER DANO
 		    anime.SetFloat("walk", 0); //ANIMAÇÃO
 		    anime.SetBool("parado", true);
         }else{
@@ -185,6 +185,5 @@ public class player_behavior : MonoBehaviour {
 		    }
 	    }
         yield return 0;
-
     }
 }

@@ -13,7 +13,6 @@ public class FadeInOutBehaviour : MonoBehaviour {
     void Start (){
 	    colorStart = renderoption.material.color;
         colorEnd = new Color(colorStart.r, colorStart.g, colorStart.b, 0);
-
     }
 
     void Update (){

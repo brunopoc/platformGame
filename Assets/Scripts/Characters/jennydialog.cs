@@ -15,7 +15,7 @@ public class jennydialog : MonoBehaviour {
 	    contDialog = 0;
 	    anima = GetComponent<Animator>();
         player_behavior = GameObject.Find("Player").GetComponent<player_behavior>();
-        dialog = GameObject.Find("Player").GetComponent<dialog>();
+        dialog = GameObject.Find("HUD").GetComponent<dialog>();
     }
 
     void Update (){
@@ -28,8 +28,6 @@ public class jennydialog : MonoBehaviour {
             player_behavior.canMove = false;
         }
     }
-
-
 
     void sceneOne (){
 	    if(contDialog == 1){

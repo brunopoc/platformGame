@@ -9,7 +9,6 @@ public class player_lifebar : MonoBehaviour {
     public GameObject life03;
     public int currentlife;
 
-
     void Start (){
         currentlife = 3;
     }
@@ -20,10 +19,10 @@ public class player_lifebar : MonoBehaviour {
 
     void lifeBehavior (){
         if(currentlife == 0){
-        life00.SetActive(true);
-        life01.SetActive(false);
-        life02.SetActive(false);
-        life03.SetActive(false);
+            life00.SetActive(true);
+            life01.SetActive(false);
+            life02.SetActive(false);
+            life03.SetActive(false);
         }
         if(currentlife == 1){
             life00.SetActive(false);

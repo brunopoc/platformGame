@@ -25,13 +25,12 @@ public class Enemy_Pip : MonoBehaviour {
     void FixedUpdate (){
 	    enemy = GetComponent<Rigidbody2D>();
 	    if(countToAttack > timeToAttack){
-	    anima.SetBool("shooting", true); //(-0.11ff + enemy.transform.position.x, -0.17ff + enemy.transform.position.y, 0);
-	    bullet_position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, 0);
-	    bullet.transform.localScale = new Vector3 (-1, 1, 1);
-	    Instantiate(bullet, bullet_position, new Quaternion(0,0,0,0));
-	    countToAttack = 0;
+	        anima.SetBool("shooting", true); //(-0.11ff + enemy.transform.position.x, -0.17ff + enemy.transform.position.y, 0);
+	        bullet_position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, 0);
+	        bullet.transform.localScale = new Vector3 (-1, 1, 1);
+	        Instantiate(bullet, bullet_position, new Quaternion(0,0,0,0));
+	        countToAttack = 0;
 	    } else {
-		
 		    countToAttack += Time.deltaTime;
 	    }
 	    if(anima.GetBool("shooting") == true){
@@ -48,7 +47,7 @@ public class Enemy_Pip : MonoBehaviour {
     void OnTriggerEnter2D ( Collider2D coll  ){
         if(coll.gameObject.tag == "HeroBullet"){
             life--;
-            bullet.GetComponent<bullet_behavior>().bullet_die = true;
+            coll.gameObject.GetComponent<bullet_behavior>().bullet_die = true;
             timeToReceive = 0;
         }
     }

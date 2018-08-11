@@ -8,7 +8,7 @@ public class ScenesManager : MonoBehaviour {
     static ScenesManager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
     float duration; //Variavel para fazer contagem
-    bool  newGame; // Booleana para troca de cena
+    public bool  newGame; // Booleana para troca de cena
     bool  loadGame; // Booleana para a troca de cena
 
     public bool  callFadeInAgain; //CHAMAR O FADE IN (SERVE APENAS PARA A CENA "MENU")
@@ -23,13 +23,10 @@ public class ScenesManager : MonoBehaviour {
     public FadeInOutBehaviour FadeInOutBehaviour;
     public dataBehaviour dataBehaviour;
 
-    Scene activeScene;
-
-
+    public Scene activeScene;
 
     void Start (){ //Começa chamando o fadeIn e setando algumas variáveis
         FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
-        dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
         activeScene = SceneManager.GetActiveScene();
         FadeInOutBehaviour.playfadeIn = true;
 
@@ -37,9 +34,9 @@ public class ScenesManager : MonoBehaviour {
 	    newGame = false;
 	    loadGame = false;
 
-		    if(instanceRef == null){ //Também verifica se o objeto deve ser mantido
+		if(instanceRef == null){    //Também verifica se o objeto deve ser mantido
 		    DontDestroyOnLoad(this);
-		    }
+		}
     }
 
     void Update (){
@@ -51,7 +48,27 @@ public class ScenesManager : MonoBehaviour {
 	    CallFadeInd(); // Chama o FadeIn quando necessário
 
 	    checkFunctions(); // Verifica quais funções precisam ser chamadas
- 	
+
+        sendDateToDataBehaviour();
+
+    }
+
+    // FUNÇÃO PARA MANDAR DADO ATRAVEZ DAS CENAS
+
+    void sendDateToDataBehaviour() {
+        if (activeScene.name == "SavenLoad"){
+            dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
+            if (newGame == true){
+                dataBehaviour.newgameOption = true;
+                dataBehaviour.callFadeInAgain = true;
+                newGame = false;
+            }
+            if (loadGame == true){
+                dataBehaviour.loadingOption = true;
+                dataBehaviour.callFadeInAgain = true;
+                loadGame = false;
+            }
+        }
     }
 
     /* ######################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
@@ -63,70 +80,66 @@ public class ScenesManager : MonoBehaviour {
 
     void checkFunctions (){ // Verifica quais funções precisam ser chamadas
 
-		    if(sceneMenu == true){
-			    sceneMenu = false;
-			    callMenu();
-		    }
-		    if(sceneSavenLoad == true){
-			    sceneSavenLoad = false;
-			    callSavenLoad();
-		    }
-		    if(sceneWorldMap == true){
-			    sceneWorldMap = false;
-			    callWorldMap();
-		    }
-		    if(scenePhase1 == true){
-			    scenePhase1 = false;
-			    callPhase1();
-		    }
+		if(sceneMenu == true){
+			sceneMenu = false;
+			callMenu();
+		}
+		if(sceneSavenLoad == true){
+			sceneSavenLoad = false;
+			callSavenLoad();
+		}
+		if(sceneWorldMap == true){
+			sceneWorldMap = false;
+			callWorldMap();
+		}
+		if(scenePhase1 == true){
+			scenePhase1 = false;
+			callPhase1();
+		}
 
     }
 
     void CallFadeInd (){
 	    if(callFadeInAgain == true){
-	 		    FadeInOutBehaviour.playfadeIn = true;
-	 		    callFadeInAgain = false;
-	 	    }
+	 		FadeInOutBehaviour.playfadeIn = true;
+	 		callFadeInAgain = false;
+	 	}
     }
 
     void CheckButtonWasPress (){
 
-    if( newGame == true){
-		 		    if(duration >= 1){
-		 			    newGame = false;
-		 			    dataBehaviour.newgameOption = true;
-		 			    duration = 0;
-		 			    callSavenLoad();
-		 		    } else {
-		 			    duration += Time.deltaTime;
-		 		    }
+        if( newGame == true){
+		    if(duration >= 1){
+		 	    duration = 0;
+		 	    callSavenLoad();
+		    } else {
+		 	    duration += Time.deltaTime;
+		    }
  	    }
  	    if( loadGame == true){
-		 		    if(duration >= 1){
-		 			    loadGame = false;
-		 			    dataBehaviour.loadingOption = true;
-		 			    duration = 0;
-		 			    callSavenLoad();
-		 		    } else {
-		 			    duration += Time.deltaTime;
-		 		    }
+		    if(duration >= 1){
+		 	    duration = 0;
+		 	    callSavenLoad();
+		    } else {
+		 	    duration += Time.deltaTime;
+		    }
  	    }
 
     }
 
     void PermanentInGame (){
-    if(activeScene.name == "SavenLoad"){
-		    instanceRef = this;
-		    }
+        if(activeScene.name == "SavenLoad"){
+	        instanceRef = this;
+	    }
 
-		    if(activeScene.name == "Menu" && instanceRef != null){
-		    callFadeInAgain = true;
-		    instanceRef = null;
-		    Destroy(this.gameObject);
-		    }
-		    if(instanceRef == null){
-		    DontDestroyOnLoad(this);
-		    }
+	    if(activeScene.name == "Menu" && instanceRef != null){
+	        callFadeInAgain = true;
+	        instanceRef = null;
+	        Destroy(this.gameObject);
+	    }
+	    if(instanceRef == null){
+	        DontDestroyOnLoad(this);
+	    }
     }
 
     /* ############## FUNÇÕES QUE ESTÃO PROGRAMADAS NOS BOTÕES DA TELA MENU ##########
@@ -134,26 +147,21 @@ public class ScenesManager : MonoBehaviour {
     ################# TODAS ESTÃO SETADAS EM BOTÕES ################################## */
 
 
-    void NewGame (){
+    public void NewGame (){
 	    newGame = true;
-	    dataBehaviour.callFadeInAgain = true;
     }
-    void LoadGame (){
+
+    public void LoadGame (){
 	    loadGame = true;
-	    dataBehaviour.callFadeInAgain = true;
     }
 
-    void fadeOut (){
-	    FadeInOutBehaviour.playfadeOut = true;
+    public void QuitGame (){
+	    Application.Quit();
     }
 
-    void QuitGame (){
-				    if(duration >= 1){
-				    Application.Quit();
-				    duration = 0;
-			 		    } else {
-		 			    duration += Time.deltaTime;
-		 		    }
+    public void fadeOut()
+    {
+        FadeInOutBehaviour.playfadeOut = true;
     }
 
     /* ---------------- CONTROLE DA TRANSIÇÃO DE CENAS -----------------------*/

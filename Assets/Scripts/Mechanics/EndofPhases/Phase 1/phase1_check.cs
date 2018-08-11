@@ -8,10 +8,13 @@ public class phase1_check : MonoBehaviour {
     public bool  canFinish;
     public float duration = 0;
 
-    public dataBehaviour dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
+    public dataBehaviour dataBehaviour;
 
 
     void Start (){
+
+        dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
+        dataBehaviour.player_lifebar = GameObject.Find("Player").GetComponent<player_lifebar>();
 
     }
 
