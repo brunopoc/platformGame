@@ -3,20 +3,19 @@ using System.Collections;
 
 public class player_behavior : MonoBehaviour {
 
-    GameObject fadeInOut;       //Controle do Fade In e Out ---- ISSO PRECISA SER TIRADO DAQUI
-
     public player_lifebar player_lifebar;
 
     public float velocidade;           //Velocidade
     public float jumpvel;              //Velocidade de pulo
     public Rigidbody2D player;         //Persongaem
     public Animator anime;             //Animação do personagem
-    public bool canDamage;             //Pode Receber Dano
-    public bool canMove;
+    public bool canDamage = true;             //Pode Receber Dano
+    public bool canMove = true;
+    public bool canDash = true;         //Esta no chão
     public bool OnGround;              //Esta no chão
-    public bool canDash;              //Esta no chão
+    bool canShootAgain = true;
     float contDamage;           // Contador para o dano
-
+    float timeToShootAgain;
     public GameObject bullet;          //Munição do personagem
     public Vector3 bullet_position;    //Posição onde a bala é instanciada
 
@@ -31,14 +30,8 @@ public class player_behavior : MonoBehaviour {
     static int extralifes;
 
     void Start (){ //Dando valor as variaveis
-        fadeInOut = GameObject.Find("back"); // Isso precisa sair daqui
-        fadeInOut.GetComponent<FadeInOutBehaviour>().playfadeIn = true; // transação da FadeIn
 
         player_lifebar = GameObject.Find("Player").GetComponent<player_lifebar>();
-
-        canDamage = true;
-        canMove = true;
-        canDash = true;
 
         player = GetComponent<Rigidbody2D>();
         anime = GetComponentInChildren<Animator>();
@@ -178,12 +171,23 @@ public class player_behavior : MonoBehaviour {
 		        anime.SetBool("falling", false);
 		    }  //FIM DO  PULO
 
-		    if(Input.GetKeyDown("z") && anime.GetBool("fire") == false){
-			    anime.SetBool("fire", true);
-			    yield return new WaitForSeconds (0.4f);
-			    anime.SetBool("fire", false);
-		    }
-	    }
+		    if(Input.GetKeyDown("z")){
+                canShootAgain = false;
+                timeToShootAgain = 0;
+            }
+
+            if (canShootAgain == false){ //CONTADOR PARA RECEBER DANO
+                anime.SetBool("fire", true);
+                timeToShootAgain += Time.deltaTime;
+                if (timeToShootAgain > 1.0f)
+                {
+                    canShootAgain = true;
+                    anime.SetBool("fire", false); //Animação
+                    timeToShootAgain = 0;
+                    yield break;
+                }
+            }
+        }
         yield return 0;
     }
 }

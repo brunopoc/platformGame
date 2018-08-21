@@ -8,7 +8,6 @@ public class dataBehaviour : MonoBehaviour {
     public bool  loadingOption;
     public bool  newgameOption;
 
-    Scene activeScene;
     public Animator anima;
     static dataBehaviour instanceRef;
 
@@ -16,10 +15,7 @@ public class dataBehaviour : MonoBehaviour {
     public Text btnText2; //texto do botão 2 (para ativa-lo)
     public Text btnText3; //texto do botão 3 (para ativa-lo)
 
-    public float duration; // Contador
-
     public bool  wantBack; // Voltar tela Inicial
-    public bool  callFadeInAgain;
     public bool  goToWorldMap;
 
     public bool  savePlease; //Salve o game
@@ -27,13 +23,13 @@ public class dataBehaviour : MonoBehaviour {
     bool  hasDate2; //Booleana para verificar se possui data nos slot
     bool  hasDate3; //Booleana para verificar se possui data nos slot
 
-    public int slotToSave;
+    public float duration = 0; // Contador
+    public int slotToSave = 1;
     public int levelsFinish;
     public int crystalCollect;
     public int masterCrystals;
     public int currentLifes;
 
-    public FadeInOutBehaviour FadeInOutBehaviour;
     public player_lifebar player_lifebar;
     public ScenesManager ScenesManager;
 
@@ -56,33 +52,23 @@ public class dataBehaviour : MonoBehaviour {
 
     void Start (){
 
-        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
-        activeScene = SceneManager.GetActiveScene();
         ScenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
-        ScenesManager.activeScene = SceneManager.GetActiveScene();
+        ScenesManager.loadCurrentScene();
+        ScenesManager.sceneControl();
 
-        slotToSave = 1;
-	    duration = 0;
 
-	    FadeInOutBehaviour.playfadeIn = true;
-
-	    if(instanceRef == null){
+        if (instanceRef == null){
 	        instanceRef = this;
 	        DontDestroyOnLoad(this);
 	    }
 
-        checkNLoadText();
+        checkNLoadText(); //Checar os campos do slot e mandar o texto
 
     }
 
     void Update (){
 
-	    checkToDestroy(); //Verifica a permanência entre as cenas e se precisa salvar
-
 	    buttonIsPress(); //Verifica se o butão está pressionado 
-	
-	    checkFadeIn();
-	    
  	
     }
 
@@ -90,7 +76,7 @@ public class dataBehaviour : MonoBehaviour {
     ########################### VERIFICAÇÕES RELACIONADO A PERMANENCIA DE DADOS #############
     */
 
-    void checkNLoadText (){ //Checar os campos do slot e mandar o texto
+    void checkNLoadText (){
 	    if(PlayerPrefs.GetInt("Níveis Concluidos 1") >= 1){
 	        levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
 	        crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 1");
@@ -116,17 +102,8 @@ public class dataBehaviour : MonoBehaviour {
 
     void checkToDestroy (){ //Verifica permanência
 		checkIfIsSave();
-		if(activeScene.name == "Menu"){
-			instanceRef = null;
-			Destroy(this.gameObject);
-		}
-    }
-
-    void checkFadeIn (){
-	    if(callFadeInAgain == true){
- 		    FadeInOutBehaviour.playfadeIn = true;
- 		    callFadeInAgain = false;
- 	    }
+		instanceRef = null;
+		Destroy(this.gameObject);
     }
 
     void checkIfIsSave (){
@@ -203,9 +180,6 @@ public class dataBehaviour : MonoBehaviour {
 			break;
 		}
     }
-    void fadeOut (){
-	    FadeInOutBehaviour.playfadeOut = true;
-    }
 
     /* ############################## FUNÇÕES PARA OS BOTÕES DA CENA "SAVENINGAME" #######
     ################################# EXCLUSIVAMENTE PARA AÇÃO DOS BOTÕES ################
@@ -215,19 +189,20 @@ public class dataBehaviour : MonoBehaviour {
 		    //O Jogo deve ser Salvo
 		if(goToWorldMap == true){
 			if(duration >= 1){
-			    ScenesManager.sceneWorldMap = true;
 			    duration = 0;
 			    goToWorldMap = false;
-			} else {
+                ScenesManager.sceneWorldMap = true;
+            } else {
 			    duration += Time.deltaTime;
 			}
 		}
 		if(wantBack == true){
 			if(duration >= 1){
-				ScenesManager.sceneMenu = true;
 				wantBack = false;
-				duration = 0;
-			} else {
+                duration = 0;
+                ScenesManager.sceneMenu = true;
+                checkToDestroy(); //Verifica a permanência entre as cenas e se precisa salvar
+            } else {
 			    duration += Time.deltaTime;
 			}
 		}
@@ -280,7 +255,7 @@ public class dataBehaviour : MonoBehaviour {
 	    if (newgameOption == true && hasDate1 == false){
 	        slotToSave = 1;
 	        destroyDate();
-	        fadeOut();
+            ScenesManager.callFadeOut();
 	        goToWorldMap = true;
 	        loadingOption = false;
 	        newgameOption = false;
@@ -297,7 +272,7 @@ public class dataBehaviour : MonoBehaviour {
 	    if (newgameOption == true && hasDate2 == false){
 	        slotToSave = 2;
 	        destroyDate();
-	        fadeOut();
+            ScenesManager.callFadeOut();
 	        goToWorldMap = true;
 	        loadingOption = false;
 	        newgameOption = false;
@@ -313,7 +288,7 @@ public class dataBehaviour : MonoBehaviour {
 	    if (newgameOption == true && hasDate3 == false){
 	        slotToSave = 3;
 	        destroyDate();
-	        fadeOut();
+            ScenesManager.callFadeOut();
 	        goToWorldMap = true;
 	        loadingOption = false;
 	        newgameOption = false;
@@ -356,11 +331,10 @@ public class dataBehaviour : MonoBehaviour {
         hasDate3 = false;
     }
 
-    void backToMenu (){ //Botão de voltar ao menu inicial
-        fadeOut();
-        wantBack = true;
-        ScenesManager.callFadeInAgain = true;
+    public void backToMenu (){ //Botão de voltar ao menu inicial
+        ScenesManager.callFadeOut();
         loadingOption = false;
         newgameOption = false;
+        wantBack = true;
     }
 }

@@ -9,12 +9,17 @@ public class phase1_check : MonoBehaviour {
     public float duration = 0;
 
     public dataBehaviour dataBehaviour;
-
+    public ScenesManager ScenesManager;
 
     void Start (){
 
         dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
         dataBehaviour.player_lifebar = GameObject.Find("Player").GetComponent<player_lifebar>();
+
+        ScenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
+        ScenesManager.loadCurrentScene();
+        ScenesManager.loadCurrentFade();
+        ScenesManager.callFadeIn();
 
     }
 

@@ -8,10 +8,8 @@ public class ScenesManager : MonoBehaviour {
     static ScenesManager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
     float duration; //Variavel para fazer contagem
-    public bool  newGame; // Booleana para troca de cena
+    bool  newGame; // Booleana para troca de cena
     bool  loadGame; // Booleana para a troca de cena
-
-    public bool  callFadeInAgain; //CHAMAR O FADE IN (SERVE APENAS PARA A CENA "MENU")
 
     // ################ VARIÁVEIS QUE CONTROLAM A ENTRADA DE CENAS ##########################
 
@@ -26,8 +24,8 @@ public class ScenesManager : MonoBehaviour {
     public Scene activeScene;
 
     void Start (){ //Começa chamando o fadeIn e setando algumas variáveis
-        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
-        activeScene = SceneManager.GetActiveScene();
+        loadCurrentFade();
+        loadCurrentScene();
         FadeInOutBehaviour.playfadeIn = true;
 
 	    duration = 0;
@@ -45,30 +43,46 @@ public class ScenesManager : MonoBehaviour {
 
 	    CheckButtonWasPress(); // Realiza a ação de acordo com o botão que foi pressionado
 
-	    CallFadeInd(); // Chama o FadeIn quando necessário
-
 	    checkFunctions(); // Verifica quais funções precisam ser chamadas
 
-        sendDateToDataBehaviour();
+    }
 
+    public void loadCurrentFade(){
+        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>();
+    }
+
+    public void callFadeOut(){
+        FadeInOutBehaviour.playfadeOut = true;
+    }
+
+    public void callFadeIn(){
+        FadeInOutBehaviour.playfadeIn = true;
     }
 
     // FUNÇÃO PARA MANDAR DADO ATRAVEZ DAS CENAS
 
-    void sendDateToDataBehaviour() {
-        if (activeScene.name == "SavenLoad"){
-            dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
-            if (newGame == true){
-                dataBehaviour.newgameOption = true;
-                dataBehaviour.callFadeInAgain = true;
-                newGame = false;
-            }
-            if (loadGame == true){
-                dataBehaviour.loadingOption = true;
-                dataBehaviour.callFadeInAgain = true;
-                loadGame = false;
-            }
+    public void sceneControl() {
+        switch (activeScene.name) {
+            case "SavenLoad":
+                dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
+                if (newGame == true){
+                    dataBehaviour.newgameOption = true;
+                    loadCurrentFade();
+                    callFadeIn();
+                    newGame = false;
+                }
+                if (loadGame == true){
+                    dataBehaviour.loadingOption = true;
+                    loadCurrentFade();
+                    callFadeIn();
+                    loadGame = false;
+                }
+            break;
         }
+    }
+
+    public void loadCurrentScene() {
+        activeScene = SceneManager.GetActiveScene();
     }
 
     /* ######################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
@@ -83,27 +97,25 @@ public class ScenesManager : MonoBehaviour {
 		if(sceneMenu == true){
 			sceneMenu = false;
 			callMenu();
-		}
+            callFadeIn();
+            instanceRef = null;
+            Destroy(this.gameObject);
+        }
 		if(sceneSavenLoad == true){
-			sceneSavenLoad = false;
+            sceneSavenLoad = false;
 			callSavenLoad();
-		}
+        }
 		if(sceneWorldMap == true){
 			sceneWorldMap = false;
 			callWorldMap();
-		}
+            callFadeIn();
+        }
 		if(scenePhase1 == true){
 			scenePhase1 = false;
 			callPhase1();
-		}
+            callFadeIn();
+        }
 
-    }
-
-    void CallFadeInd (){
-	    if(callFadeInAgain == true){
-	 		FadeInOutBehaviour.playfadeIn = true;
-	 		callFadeInAgain = false;
-	 	}
     }
 
     void CheckButtonWasPress (){
@@ -128,18 +140,10 @@ public class ScenesManager : MonoBehaviour {
     }
 
     void PermanentInGame (){
-        if(activeScene.name == "SavenLoad"){
-	        instanceRef = this;
-	    }
-
-	    if(activeScene.name == "Menu" && instanceRef != null){
-	        callFadeInAgain = true;
-	        instanceRef = null;
-	        Destroy(this.gameObject);
-	    }
 	    if(instanceRef == null){
 	        DontDestroyOnLoad(this);
-	    }
+            instanceRef = this;
+        }
     }
 
     /* ############## FUNÇÕES QUE ESTÃO PROGRAMADAS NOS BOTÕES DA TELA MENU ##########
@@ -148,20 +152,17 @@ public class ScenesManager : MonoBehaviour {
 
 
     public void NewGame (){
+        callFadeOut();
 	    newGame = true;
     }
 
     public void LoadGame (){
-	    loadGame = true;
+        callFadeOut();
+        loadGame = true;
     }
 
     public void QuitGame (){
 	    Application.Quit();
-    }
-
-    public void fadeOut()
-    {
-        FadeInOutBehaviour.playfadeOut = true;
     }
 
     /* ---------------- CONTROLE DA TRANSIÇÃO DE CENAS -----------------------*/
