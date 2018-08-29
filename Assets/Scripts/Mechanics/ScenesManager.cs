@@ -26,6 +26,7 @@ public class ScenesManager : MonoBehaviour {
     void Start (){ //Começa chamando o fadeIn e setando algumas variáveis
         loadCurrentFade();
         loadCurrentScene();
+        PermanentInGame(); //Verifica se a cena deve permanecer em game;
         FadeInOutBehaviour.playfadeIn = true;
 
 	    duration = 0;
@@ -39,24 +40,10 @@ public class ScenesManager : MonoBehaviour {
 
     void Update (){
 
-	    PermanentInGame(); //Verifica se a cena deve permanecer em game;
-
 	    CheckButtonWasPress(); // Realiza a ação de acordo com o botão que foi pressionado
 
 	    checkFunctions(); // Verifica quais funções precisam ser chamadas
 
-    }
-
-    public void loadCurrentFade(){
-        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>();
-    }
-
-    public void callFadeOut(){
-        FadeInOutBehaviour.playfadeOut = true;
-    }
-
-    public void callFadeIn(){
-        FadeInOutBehaviour.playfadeIn = true;
     }
 
     // FUNÇÃO PARA MANDAR DADO ATRAVEZ DAS CENAS
@@ -91,6 +78,18 @@ public class ScenesManager : MonoBehaviour {
     ########################### VERIFICAR QUAL BOTÃO FOI PRESSIONADO #######################
     ########################### GARANTIR A PERMANENCIA DO SCRIPT DURANTE A TROCA DE CENAS ## 
     ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/
+
+    public void loadCurrentFade(){
+        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>();
+    }
+
+    public void callFadeOut(){
+        FadeInOutBehaviour.playfadeOut = true;
+    }
+
+    public void callFadeIn(){
+        FadeInOutBehaviour.playfadeIn = true;
+    }
 
     void checkFunctions (){ // Verifica quais funções precisam ser chamadas
 

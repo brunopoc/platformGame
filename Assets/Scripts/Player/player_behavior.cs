@@ -5,21 +5,21 @@ public class player_behavior : MonoBehaviour {
 
     public player_lifebar player_lifebar;
 
-    public float velocidade;           //Velocidade
-    public float jumpvel;              //Velocidade de pulo
-    public Rigidbody2D player;         //Persongaem
-    public Animator anime;             //Animação do personagem
-    public bool canDamage = true;             //Pode Receber Dano
+    public float velocidade;                //Velocidade
+    public float jumpvel;                   //Velocidade de pulo
+    public Rigidbody2D player;              //Persongaem
+    public Animator anime;                  //Animação do personagem
+    public bool canDamage = true;           //Pode Receber Dano
     public bool canMove = true;
-    public bool canDash = true;         //Esta no chão
-    public bool OnGround;              //Esta no chão
+    public bool canDash = true;             //Esta no chão
+    public bool OnGround;                   //Esta no chão
     bool canShootAgain = true;
-    float contDamage;           // Contador para o dano
+    float contDamage;                       // Contador para o dano
     float timeToShootAgain;
-    public GameObject bullet;          //Munição do personagem
-    public Vector3 bullet_position;    //Posição onde a bala é instanciada
+    public GameObject bullet;               //Munição do personagem
+    public Vector3 bullet_position;         //Posição onde a bala é instanciada
 
-    public Transform ponto1;           //Posição do Physics2D.LineCast
+    public Transform ponto1;                //Posição do Physics2D.LineCast
     public Transform ponto2;
     public GameObject respawn;
 
@@ -39,11 +39,11 @@ public class player_behavior : MonoBehaviour {
     }
 
     void Update (){
-        PlayerJump(); //Função que habilita o pulo
-        PlayerWalk(); //Player Andando
-        PlayerShooting(); //Jogador Atirando
-        PlayerDash();
-        StartCoroutine(PlayerReceiveDamage()); //Jogador Recebendo Dano
+        PlayerJump();                           //Função que habilita o pulo
+        PlayerWalk();                           //Player Andando
+        PlayerShooting();                       //Jogador Atirando
+        StartCoroutine(PlayerDash());
+        StartCoroutine(PlayerReceiveDamage());  //Jogador Recebendo Dano
     }
 
     IEnumerator PlayerReceiveDamage (){
@@ -70,12 +70,13 @@ public class player_behavior : MonoBehaviour {
     }
 
     IEnumerator PlayerDash (){ 
-		if(Input.GetKey("x") && OnGround == true && canDash == true){
+		if(Input.GetKeyDown("x") && OnGround == true && canDash == true && Input.GetAxis("Horizontal") != 0)
+        {
 			velocidade = 10;
 			canDash = false;
-		    yield return new WaitForSeconds(0.5f);
+		    yield return new WaitForSeconds(0.4f);
 		    velocidade = 4;
-		    yield return new WaitForSeconds(0.5f);
+		    yield return new WaitForSeconds(0.1f);
 		    canDash = true;
 		}
     }
@@ -174,6 +175,13 @@ public class player_behavior : MonoBehaviour {
 		    if(Input.GetKeyDown("z")){
                 canShootAgain = false;
                 timeToShootAgain = 0;
+            }
+
+            if (canDash != true) {
+                anime.SetBool("dash", true);
+            }
+            else {
+                anime.SetBool("dash", false);
             }
 
             if (canShootAgain == false){ //CONTADOR PARA RECEBER DANO
