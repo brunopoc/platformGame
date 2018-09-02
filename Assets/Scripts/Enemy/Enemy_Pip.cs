@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Enemy_Pip : MonoBehaviour {
+public class enemy_Pip : MonoBehaviour {
 
     public Animator anima;
     public GameObject bullet;
@@ -47,7 +47,7 @@ public class Enemy_Pip : MonoBehaviour {
     void OnTriggerEnter2D ( Collider2D coll  ){
         if(coll.gameObject.tag == "HeroBullet"){
             life--;
-            coll.gameObject.GetComponent<bullet_behavior>().bullet_die = true;
+            coll.gameObject.GetComponent<bullet_Behavior>().bullet_die = true;
             timeToReceive = 0;
         }
     }

@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class jennydialog : MonoBehaviour {
+public class jennyDialog : MonoBehaviour {
 
     int contScene;
     int contDialog;
 
-    public player_behavior player_behavior;
+    public player_Behaviour player_behavior;
     public dialog dialog;
 
     Animator anima; //Animação que exibe o campo de dialogo
@@ -14,7 +14,7 @@ public class jennydialog : MonoBehaviour {
     void Start (){
 	    contDialog = 0;
 	    anima = GetComponent<Animator>();
-        player_behavior = GameObject.Find("Player").GetComponent<player_behavior>();
+        player_behavior = GameObject.Find("Player").GetComponent<player_Behaviour>();
         dialog = GameObject.Find("HUD").GetComponent<dialog>();
     }
 

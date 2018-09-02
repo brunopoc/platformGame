@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class ScenesManager : MonoBehaviour {
+public class scenesManager : MonoBehaviour {
 
     UnityEngine.SceneManagement.SceneManager newScene; //Variável para a troca de cenas
-    static ScenesManager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
+    static scenesManager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
     float duration; //Variavel para fazer contagem
     bool  newGame; // Booleana para troca de cena
@@ -13,12 +13,11 @@ public class ScenesManager : MonoBehaviour {
 
     // ################ VARIÁVEIS QUE CONTROLAM A ENTRADA DE CENAS ##########################
 
-    public bool  sceneMenu;
-    public bool  sceneSavenLoad;
-    public bool  sceneWorldMap;
-    public bool  scenePhase1;
+    public bool sceneMenu;
+    public bool sceneSavenLoad;
+    public bool sceneGamePlay;
 
-    public FadeInOutBehaviour FadeInOutBehaviour;
+    public fadeInOutBehaviour FadeInOutBehaviour;
     public dataBehaviour dataBehaviour;
 
     public Scene activeScene;
@@ -80,7 +79,7 @@ public class ScenesManager : MonoBehaviour {
     ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/
 
     public void loadCurrentFade(){
-        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>();
+        FadeInOutBehaviour = GameObject.Find("FadeInOut").GetComponent<fadeInOutBehaviour>();
     }
 
     public void callFadeOut(){
@@ -104,14 +103,9 @@ public class ScenesManager : MonoBehaviour {
             sceneSavenLoad = false;
 			callSavenLoad();
         }
-		if(sceneWorldMap == true){
-			sceneWorldMap = false;
-			callWorldMap();
-            callFadeIn();
-        }
-		if(scenePhase1 == true){
-			scenePhase1 = false;
-			callPhase1();
+		if(sceneGamePlay == true){
+            sceneGamePlay = false;
+			callGamePlay();
             callFadeIn();
         }
 
@@ -166,11 +160,8 @@ public class ScenesManager : MonoBehaviour {
 
     /* ---------------- CONTROLE DA TRANSIÇÃO DE CENAS -----------------------*/
 
-    void callWorldMap (){
-        SceneManager.LoadScene("worldmap");
-    }
-    void callPhase1 (){
-        SceneManager.LoadScene("phase_1");
+    void callGamePlay(){
+        SceneManager.LoadScene("Gameplay");
     }
     void callMenu (){
         SceneManager.LoadScene("Menu");

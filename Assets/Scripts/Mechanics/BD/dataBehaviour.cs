@@ -16,7 +16,7 @@ public class dataBehaviour : MonoBehaviour {
     public Text btnText3; //texto do botão 3 (para ativa-lo)
 
     public bool  wantBack; // Voltar tela Inicial
-    public bool  goToWorldMap;
+    public bool  goToGamePlay;
 
     public bool  savePlease; //Salve o game
     bool  hasDate1; //Booleana para verificar se possui data nos slot
@@ -30,8 +30,8 @@ public class dataBehaviour : MonoBehaviour {
     public int masterCrystals;
     public int currentLifes;
 
-    public player_lifebar player_lifebar;
-    public ScenesManager ScenesManager;
+    public player_Lifebar player_lifebar;
+    public scenesManager ScenesManager;
 
 
     /*
@@ -52,7 +52,7 @@ public class dataBehaviour : MonoBehaviour {
 
     void Start (){
 
-        ScenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
+        ScenesManager = GameObject.Find("SceneManager").GetComponent<scenesManager>();
         ScenesManager.loadCurrentScene();
         ScenesManager.sceneControl();
 
@@ -68,8 +68,10 @@ public class dataBehaviour : MonoBehaviour {
 
     void Update (){
 
-	    buttonIsPress(); //Verifica se o butão está pressionado 
- 	
+	    buttonIsPress(); //Verifica se o butão está pressionado
+        checkIfIsSave(); //Verifica se é necessário salvar o jogo
+
+
     }
 
     /*########################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
@@ -187,11 +189,11 @@ public class dataBehaviour : MonoBehaviour {
 
     void buttonIsPress (){  //Verifica se algum botão foi pressionado
 		    //O Jogo deve ser Salvo
-		if(goToWorldMap == true){
+		if(goToGamePlay == true){
 			if(duration >= 1){
 			    duration = 0;
-			    goToWorldMap = false;
-                ScenesManager.sceneWorldMap = true;
+                goToGamePlay = false;
+                ScenesManager.sceneGamePlay = true;
             } else {
 			    duration += Time.deltaTime;
 			}
@@ -216,7 +218,7 @@ public class dataBehaviour : MonoBehaviour {
             masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 1");
             currentLifes = PlayerPrefs.GetInt("Vidas 1");
             slotToSave = 1;
-            goToWorldMap =  true;
+            goToGamePlay =  true;
             loadingOption = false;
             newgameOption = false;
 	    }
@@ -230,7 +232,7 @@ public class dataBehaviour : MonoBehaviour {
             masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 2");
             currentLifes = PlayerPrefs.GetInt("Vidas 2");
             slotToSave = 2;
-            goToWorldMap =  true;
+            goToGamePlay =  true;
             loadingOption = false;
             newgameOption = false;
 	    }
@@ -244,7 +246,7 @@ public class dataBehaviour : MonoBehaviour {
 	        masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 3");
 	        currentLifes = PlayerPrefs.GetInt("Vidas 3");
 	        slotToSave = 3;
-	        goToWorldMap =  true;
+            goToGamePlay =  true;
 	        loadingOption = false;
 	        newgameOption = false;
 	    }
@@ -256,7 +258,7 @@ public class dataBehaviour : MonoBehaviour {
 	        slotToSave = 1;
 	        destroyDate();
             ScenesManager.callFadeOut();
-	        goToWorldMap = true;
+            goToGamePlay = true;
 	        loadingOption = false;
 	        newgameOption = false;
 		}else if(loadingOption == true) {
@@ -270,13 +272,13 @@ public class dataBehaviour : MonoBehaviour {
     public void saveDate2 (){ //Lógica do Save APENAS para Botões
 	    checkDate();
 	    if (newgameOption == true && hasDate2 == false){
-	        slotToSave = 2;
-	        destroyDate();
+            slotToSave = 2;
+            destroyDate();
             ScenesManager.callFadeOut();
-	        goToWorldMap = true;
-	        loadingOption = false;
-	        newgameOption = false;
-		} else if(loadingOption == true) {
+            goToGamePlay = true;
+            loadingOption = false;
+            newgameOption = false;
+        } else if(loadingOption == true) {
 			loadDate2();
 		} else if (newgameOption == true && hasDate2 == true){
 			slotToSave = 2;
@@ -289,7 +291,7 @@ public class dataBehaviour : MonoBehaviour {
 	        slotToSave = 3;
 	        destroyDate();
             ScenesManager.callFadeOut();
-	        goToWorldMap = true;
+            goToGamePlay = true;
 	        loadingOption = false;
 	        newgameOption = false;
 		}else if(loadingOption == true) {

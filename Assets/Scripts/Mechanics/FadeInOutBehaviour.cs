@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FadeInOutBehaviour : MonoBehaviour {
+public class fadeInOutBehaviour : MonoBehaviour {
     public Color colorStart;
     public Color colorEnd;
     public Renderer renderoption;

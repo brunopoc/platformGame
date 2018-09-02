@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class enemy_ninja : MonoBehaviour {
+public class enemy_Ninja : MonoBehaviour {
 
     Rigidbody2D enemy; // Inimigo - NINJA
     float velocidade;
@@ -11,14 +11,10 @@ public class enemy_ninja : MonoBehaviour {
     float timeToWalk;
     bool  attackPlayer;
     float timeToReceive;
-    public FadeInOutBehaviour FadeInOutBehaviour;
 
     static Animator anima;
 
     void Start (){
-        FadeInOutBehaviour = GameObject.Find("back").GetComponent<FadeInOutBehaviour>(); // Isso precisa sair daqui
-
-        FadeInOutBehaviour.playfadeIn = true; // transação da tela
         anima = GetComponentInChildren<Animator>();
         enemy = GetComponent<Rigidbody2D>();
         velocidade = 1;
@@ -83,7 +79,7 @@ public class enemy_ninja : MonoBehaviour {
         if(coll.gameObject.tag == "HeroBullet"){
             life--;
             anima.SetBool("recebendo", true);
-            coll.gameObject.GetComponent<bullet_behavior>().bullet_die = true;
+            coll.gameObject.GetComponent<bullet_Behavior>().bullet_die = true;
             timeToReceive = 0;
         }
         if(coll.gameObject.tag == "Player" && attackPlayer == false){       

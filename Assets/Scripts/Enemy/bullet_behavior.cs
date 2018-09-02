@@ -1,18 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class bullet_behavior : MonoBehaviour {
+public class bullet_Behavior : MonoBehaviour {
 
     GameObject bullet;
     float timecont = 0;
     public float velocidade;
     public bool  bullet_die;
     public float destroyItNow;
-    public player_behavior player_behavior;
+    public player_Behaviour player_behavior;
 
     void Start (){
         bullet = this.gameObject;
-        player_behavior = GameObject.Find("Player").GetComponent<player_behavior>();
+        player_behavior = GameObject.Find("Player").GetComponent<player_Behaviour>();
     }
 
     void Update (){
