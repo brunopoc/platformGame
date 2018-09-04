@@ -18,7 +18,9 @@ public class player_Behaviour : MonoBehaviour {
     public bool OnGround;                   //Esta no chão
     public bool onWall = false;
     public bool canJumpWall = false;
-    float backupVelocidade;
+    static float backupVelocidade;
+    static float velocidadeOnWallBackup;
+    bool wallWithDash = false;              //Caso o jogador pressione X enquanto está na parede
     int sideOfWall = 1;
     bool canShootAgain = true;
     float contDamage;                       // Contador para o dano
@@ -43,6 +45,7 @@ public class player_Behaviour : MonoBehaviour {
         player = GetComponent<Rigidbody2D>();
         anime = GetComponentInChildren<Animator>();
         backupVelocidade = velocidade;
+        velocidadeOnWallBackup = velocidadeOnWall;
 
     }
 
@@ -57,21 +60,35 @@ public class player_Behaviour : MonoBehaviour {
         StartCoroutine(wallJump());
         PlayerWalk();                           //Player Andando
         PlayerJump();                           //Função que habilita o pulo
-        Debug.Log(Input.GetAxis("Horizontal"));
     }
 
     IEnumerator wallJump() {
         if(onWall == true && OnGround == false && player.velocity.y < 0) {
             player.velocity = new Vector2(player.velocity.x, -jumpvelOnWall);
+            if (Input.GetKeyDown("x")){
+                wallWithDash = true;
+            }
             if (Input.GetButtonDown("Jump")) {
-                if(Input.GetAxis("Horizontal") == 1 && sideOfWall == 1)
+                if (wallWithDash) { 
+                    velocidade = 10;
+                    velocidadeOnWall = -3;
+                }
+                yield return new WaitForSeconds(0.1f);
+                if((Input.GetAxis("Horizontal") == 1 && sideOfWall == 1) || (Input.GetAxis("Horizontal") == -1 && sideOfWall == -1)) { 
                     velocidade = velocidadeOnWall;
-
-                yield return new WaitForSeconds(0.2f);
-                velocidade = backupVelocidade;
+                    yield return new WaitForSeconds(0.2f);
+                    velocidade = backupVelocidade;
+                }
             }
             canJumpWall = true;
         }
+
+        if (Input.GetKeyUp("x")){
+            velocidadeOnWall = velocidadeOnWallBackup;
+            velocidade = backupVelocidade;
+            wallWithDash = false;
+        }
+
         yield break;
     }
 
