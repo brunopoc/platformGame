@@ -3,7 +3,7 @@ using System.Collections;
 
 public class greyLabel : MonoBehaviour {
 
-    float movement;
+    public float movement;
     Vector3 direction;
     public GameObject blackObject;
     public dialog dialog;

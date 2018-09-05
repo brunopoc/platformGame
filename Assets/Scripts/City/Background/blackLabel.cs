@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class blackLabel : MonoBehaviour {
-    float movement;
+    public float movement;
     Vector3 direction;
 
     public GameObject blackObject;

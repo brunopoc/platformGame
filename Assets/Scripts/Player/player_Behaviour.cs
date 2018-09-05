@@ -257,6 +257,13 @@ public class player_Behaviour : MonoBehaviour {
                     yield break;
                 }
             }
+            if (onWall == true) {
+                anime.SetBool("wall_jump", true); //Animação
+            }
+            if (onWall == false)
+            {
+                anime.SetBool("wall_jump", false); //Animação
+            }
         }
         yield return 0;
     }

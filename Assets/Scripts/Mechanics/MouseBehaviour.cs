@@ -5,12 +5,10 @@ public class mouseBehaviour : MonoBehaviour {
 
     public GameObject position;
     bool  mouseOnPosition;
-    float sensibilidade;
     Vector2 newMousePosition;
 
 
     void Start (){
-        sensibilidade = 10;
         position.transform.position = Input.mousePosition ;
         // Cursor.visible = false;
     }
