@@ -26,7 +26,7 @@ TextureImporter:
     21300042: roof-3
     21300044: roof-5
     21300046: coverage-1
-    21300048: coverage-2
+    21300048: coverage-3
     21300050: bigdoor-2
     21300052: magazine-1
     21300054: magazine-2
@@ -64,6 +64,7 @@ TextureImporter:
     21300118: whitebuild-6
     21300120: whitebuild-7
     21300122: hospital-sym
+    21300124: coverage-2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -591,7 +592,7 @@ TextureImporter:
         serializedVersion: 2
         x: 131
         y: 358
-        width: 29
+        width: 13
         height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -606,13 +607,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: coverage-2
+      name: coverage-3
       rect:
         serializedVersion: 2
-        x: 160
-        y: 359
-        width: 31
-        height: 14
+        x: 179
+        y: 358
+        width: 12
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1361,6 +1362,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b520327f6d2a22646b388faacf84231f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: coverage-2
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 358
+        width: 35
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b56139f36bbbc469fafa5bbddb24bc
       vertices: []
       indices: 
       edges: []
