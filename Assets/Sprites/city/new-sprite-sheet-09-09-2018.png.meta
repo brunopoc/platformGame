@@ -65,6 +65,8 @@ TextureImporter:
     21300120: whitebuild-7
     21300122: hospital-sym
     21300124: coverage-2
+    21300126: policecar
+    21300128: box
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -1375,13 +1377,53 @@ TextureImporter:
         width: 35
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 49b56139f36bbbc469fafa5bbddb24bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: policecar
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 100
+        width: 158
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b327e4a9879a504b8270eebfb9fdfcd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: box
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 71
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a70f771375384f42a7b7bafedbde64c
       vertices: []
       indices: 
       edges: []
