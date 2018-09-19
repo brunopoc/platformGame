@@ -173,7 +173,7 @@ public class player_Behaviour : MonoBehaviour {
     	    player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             StartCoroutine(animatorPlayerControl());
         } else {
-            player.velocity = new Vector2(velocidade * Input.GetAxis("Horizontal"), player.velocity.y); //MOVIMENTAÇÃO DO PLAYER
+            player.velocity  = new Vector2(velocidade * Input.GetAxis("Horizontal"), player.velocity.y); //MOVIMENTAÇÃO DO PLAYER
             if(Input.GetAxis("Horizontal") > 0){
                 player.transform.localScale = new Vector3(1,1,1);
                 StartCoroutine(animatorPlayerControl());               
