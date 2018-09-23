@@ -17,7 +17,7 @@ public class cameraBehaviour : MonoBehaviour {
 
         if (targetPlayer.position.y > 2) { // --- MOVIMENTAR A CAMERA
             if (this.gameObject.transform.position.y < targetPlayer.position.y && needTranslate == true) {
-                this.gameObject.transform.Translate(0, velocity, 0);
+                this.gameObject.transform.Translate(0, velocity * Time.deltaTime, 0);
                 this.gameObject.transform.position = new Vector3(targetPlayer.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
             } else {
                 this.gameObject.transform.position = new Vector3(targetPlayer.position.x, targetPlayer.position.y, this.gameObject.transform.position.z);
@@ -25,7 +25,7 @@ public class cameraBehaviour : MonoBehaviour {
             }
         } else {
             if (this.gameObject.transform.position.y > groundLevel) {
-                this.gameObject.transform.Translate(0, -velocity, 0);
+                this.gameObject.transform.Translate(0, -velocity * Time.deltaTime, 0);
                 this.gameObject.transform.position = new Vector3(targetPlayer.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
             } else {
                 this.gameObject.transform.position = new Vector3(targetPlayer.position.x, groundLevel, this.gameObject.transform.position.z);

@@ -64,6 +64,7 @@ public class player_Behaviour : MonoBehaviour {
 
     IEnumerator wallJump() {
         if(onWall == true && OnGround == false && player.velocity.y < 0) {
+            canJumpWall = true;
             player.velocity = new Vector2(player.velocity.x, -jumpvelOnWall);
             if (Input.GetKeyDown("x")){
                 wallWithDash = true;
@@ -79,8 +80,7 @@ public class player_Behaviour : MonoBehaviour {
                     yield return new WaitForSeconds(0.2f);
                     velocidade = backupVelocidade;
                 }
-            }
-            canJumpWall = true;
+            }   
         }
 
         if (Input.GetKeyUp("x")){
@@ -116,9 +116,9 @@ public class player_Behaviour : MonoBehaviour {
     }
 
     IEnumerator PlayerDash (){ 
-		if(Input.GetKeyDown("x") && OnGround == true && canDash == true && Input.GetAxis("Horizontal") != 0){
+		if(Input.GetKeyDown("x") && OnGround == true && canDash == true && (Input.GetAxis("Horizontal") < -0.8 || Input.GetAxis("Horizontal") > 0.8)){
 			velocidade = 10;
-			canDash = false;
+            canDash = false;
 		    yield return new WaitForSeconds(0.4f);
 		    velocidade = 4;
 		    yield return new WaitForSeconds(0.1f);
@@ -162,6 +162,7 @@ public class player_Behaviour : MonoBehaviour {
             if (canJumpWall == true) {
                 if (Input.GetButtonDown("Jump")){
                     player.velocity = new Vector2(player.velocity.x, jumpvel);
+                    canJumpWall = false;
                 }
             }
             StartCoroutine(animatorPlayerControl());
@@ -263,6 +264,7 @@ public class player_Behaviour : MonoBehaviour {
             if (onWall == false)
             {
                 anime.SetBool("wall_jump", false); //Animação
+                canJumpWall = false;
             }
         }
         yield return 0;
