@@ -8,11 +8,11 @@ public class bullet_Behavior : MonoBehaviour {
     public float velocidade;
     public bool  bullet_die;
     public float destroyItNow;
-    public player_Behaviour player_behavior;
+    public player_behaviour player_behavior;
 
     void Start (){
         bullet = this.gameObject;
-        player_behavior = GameObject.Find("Player").GetComponent<player_Behaviour>();
+        player_behavior = GameObject.Find("Player").GetComponent<player_behaviour>();
     }
 
     void Update (){

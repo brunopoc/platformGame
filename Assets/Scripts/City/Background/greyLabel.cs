@@ -7,13 +7,13 @@ public class greyLabel : MonoBehaviour {
     Vector3 direction;
     public GameObject blackObject;
     public dialog dialog;
-    public player_Behaviour player_behavior;
+    public player_behaviour player_behavior;
 
     void Start (){
         direction.y = 0;
         direction.z = 0;
         dialog = GameObject.Find("Player").GetComponent<dialog>();
-        player_behavior = GameObject.Find("Player").GetComponent<player_Behaviour>();
+        player_behavior = GameObject.Find("Player").GetComponent<player_behaviour>();
     }
 
     void Update (){

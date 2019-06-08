@@ -30,7 +30,7 @@ public class dataBehaviour : MonoBehaviour {
     public int masterCrystals;
     public int currentLifes;
 
-    public player_Lifebar player_lifebar;
+    public player_lifebar player_lifebar;
     public scenesManager ScenesManager;
 
 
