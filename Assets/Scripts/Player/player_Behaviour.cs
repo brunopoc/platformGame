@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class player_Behaviour : MonoBehaviour {
+public class player_behaviour :  MonoBehaviour {
 
-    public player_Lifebar player_lifebar;
+    public player_lifebar player_lifebar;
 
     public Rigidbody2D player;              //Persongaem
     public Animator anime;                  //Animação do personagem
@@ -40,7 +40,7 @@ public class player_Behaviour : MonoBehaviour {
 
     void Start (){ //Dando valor as variaveis
 
-        player_lifebar = GameObject.Find("Player").GetComponent<player_Lifebar>();
+        player_lifebar = GameObject.Find("Player").GetComponent<player_lifebar>();
 
         player = GetComponent<Rigidbody2D>();
         anime = GetComponentInChildren<Animator>();
