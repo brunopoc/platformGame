@@ -4,7 +4,6 @@ using System.Collections;
 public class player_behavior : MonoBehaviour {
 
     public player_lifebar player_lifebar;
-
     public float velocidade;                //Velocidade
     public float jumpvel;                   //Velocidade de pulo
     public Rigidbody2D player;              //Persongaem
