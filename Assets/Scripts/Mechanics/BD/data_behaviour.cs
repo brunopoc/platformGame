@@ -3,13 +3,13 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class dataBehaviour : MonoBehaviour {
+public class data_behaviour : MonoBehaviour {
 
     public bool  loadingOption;
     public bool  newgameOption;
 
     public Animator anima;
-    static dataBehaviour instanceRef;
+    static data_behaviour instanceRef;
 
     public Text btnText1; //texto do botão 1 (para ativa-lo)
     public Text btnText2; //texto do botão 2 (para ativa-lo)
@@ -31,7 +31,7 @@ public class dataBehaviour : MonoBehaviour {
     public int currentLifes;
 
     public player_lifebar player_lifebar;
-    public scenesManager ScenesManager;
+    public scenes_manager ScenesManager;
 
 
     /*
@@ -52,7 +52,7 @@ public class dataBehaviour : MonoBehaviour {
 
     void Start (){
 
-        ScenesManager = GameObject.Find("SceneManager").GetComponent<scenesManager>();
+        ScenesManager = GameObject.Find("SceneManager").GetComponent<scenes_manager>();
         ScenesManager.loadCurrentScene();
         ScenesManager.sceneControl();
 

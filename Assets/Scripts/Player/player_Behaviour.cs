@@ -40,7 +40,7 @@ public class player_behaviour :  MonoBehaviour {
 
     void Start (){ //Dando valor as variaveis
 
-        player_lifebar = GameObject.Find("Player").GetComponent<player_lifebar>();
+        player_lifebar = GameObject.Find("player").GetComponent<player_lifebar>();
 
         player = GetComponent<Rigidbody2D>();
         anime = GetComponentInChildren<Animator>();

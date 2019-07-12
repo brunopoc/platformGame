@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class scenesManager : MonoBehaviour {
+public class scenes_manager : MonoBehaviour {
 
     UnityEngine.SceneManagement.SceneManager newScene; //Variável para a troca de cenas
-    static scenesManager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
+    static scenes_manager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
     float duration; //Variavel para fazer contagem
     bool  newGame; // Booleana para troca de cena
@@ -17,8 +17,8 @@ public class scenesManager : MonoBehaviour {
     public bool sceneSavenLoad;
     public bool sceneGamePlay;
 
-    public fadeInOutBehaviour FadeInOutBehaviour;
-    public dataBehaviour dataBehaviour;
+    public fade_behaviour FadeInOutBehaviour;
+    public data_behaviour dataBehaviour;
 
     public Scene activeScene;
 
@@ -50,7 +50,7 @@ public class scenesManager : MonoBehaviour {
     public void sceneControl() {
         switch (activeScene.name) {
             case "SavenLoad":
-                dataBehaviour = GameObject.Find("DateBehaviour").GetComponent<dataBehaviour>();
+                dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
                 if (newGame == true){
                     dataBehaviour.newgameOption = true;
                     loadCurrentFade();
@@ -79,7 +79,7 @@ public class scenesManager : MonoBehaviour {
     ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/
 
     public void loadCurrentFade(){
-        FadeInOutBehaviour = GameObject.Find("FadeInOut").GetComponent<fadeInOutBehaviour>();
+        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
     }
 
     public void callFadeOut(){

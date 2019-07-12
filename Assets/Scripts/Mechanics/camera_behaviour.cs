@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class cameraBehaviour : MonoBehaviour {
+public class camera_behaviour : MonoBehaviour {
 
     public Transform targetPlayer;
     public float groundLevel = 0.553f;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class fadeInOutBehaviour : MonoBehaviour {
+public class fade_behaviour : MonoBehaviour {
     public Color colorStart;
     public Color colorEnd;
     public Renderer renderoption;
@@ -9,12 +9,12 @@ public class fadeInOutBehaviour : MonoBehaviour {
     public float t = 1.0f;
     public bool  playfadeIn = false;
     public bool  playfadeOut = false;
-    public scenesManager ScenesManager;
+    public scenes_manager ScenesManager;
 
     void Start (){
 	    colorStart = renderoption.material.color;
         colorEnd = new Color(colorStart.r, colorStart.g, colorStart.b, 0);
-        ScenesManager = GameObject.Find("SceneManager").GetComponent<scenesManager>();
+        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
         ScenesManager.loadCurrentFade();
     }
 

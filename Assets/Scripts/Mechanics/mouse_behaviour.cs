@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class mouseBehaviour : MonoBehaviour {
+public class mouse_behaviour : MonoBehaviour {
 
     public GameObject position;
     bool  mouseOnPosition;

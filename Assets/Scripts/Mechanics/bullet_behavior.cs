@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class bullet_Behavior : MonoBehaviour {
+public class bullet_behavior : MonoBehaviour {
 
     GameObject bullet;
     float timecont = 0;
