@@ -16,9 +16,7 @@ public class data_behaviour : MonoBehaviour {
     public Text btnText3; //texto do botão 3 (para ativa-lo)
 
     public bool  savePlease; //Salve o game
-    bool  hasDate1; //Booleana para verificar se possui data nos slot
-    bool  hasDate2; //Booleana para verificar se possui data nos slot
-    bool  hasDate3; //Booleana para verificar se possui data nos slot
+    public bool  hasData; //Booleana para verificar se possui data nos slot
 
     public float duration = 0; // Contador
     public int slotToSave = 1;
@@ -30,44 +28,20 @@ public class data_behaviour : MonoBehaviour {
     public player_lifebar player_lifebar;
     public scenes_manager ScenesManager;
 
-
-    /*
-	    Tipos de dados:
-	    Níveis Concluidos (levelFinish)
-	    Cristais Coletados (crystalCollect)
-	    Master Cristais Coletados (masterCrystals)
-	    Vidas (currentLifes)
-
-	    ----
-	    Futuramente também registrar:
-	    Armas Desbloqueadas[]
-		    Canhão -> Desbloq
-	    Cenas Desbloqueadas []
-		    Allye - > Desbloq
-	    Relacionamento[]
-    */
-
     void Start (){
-
         ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
-
         if (instanceRef == null){
 	        instanceRef = this;
 	        DontDestroyOnLoad(this);
 	    }
-
-        checkNLoadText(); //Checar os campos do slot e mandar o texto
-
+        checkNLoadText();
     }
-
     void Update (){
-        checkIfIsSave(); //Verifica se é necessário salvar o jogo
+        checkIfIsSave();
+		if(loadingOption) {
+			loadData();
+		}
     }
-
-    /*########################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
-    ########################### VERIFICAÇÕES RELACIONADO A PERMANENCIA DE DADOS #############
-    */
-
     void checkNLoadText (){
 	    if(PlayerPrefs.GetInt("Níveis Concluidos 1") >= 1){
 	        levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
@@ -91,60 +65,47 @@ public class data_behaviour : MonoBehaviour {
 	        btnText3.text = "Níveis Concluidos: " + levelsFinish + " \n" + "Cristais Coletados: " + crystalCollect + " \n" + "Master Crystals : " + masterCrystals;
 	    }
     }
-
-    void checkToDestroy (){ //Verifica permanência
+    void checkToDestroy (){
 		checkIfIsSave();
 		instanceRef = null;
 		Destroy(this.gameObject);
     }
-
     void checkIfIsSave (){
-	    if(savePlease == true){ //Salve o Game
+	    if(savePlease == true){
 			saveDate();
 			savePlease = false;
  	    }
     }
 
-    void checkDate (){ //Verifica se tem algum conteúdo no Slot
-	    if(PlayerPrefs.GetInt("Níveis Concluidos 1") >= 1){
-		    hasDate1 = true;
-	    }
-	    if(PlayerPrefs.GetInt("Níveis Concluidos 2") >= 1){
-		    hasDate2 = true;
-	    }
-	    if(PlayerPrefs.GetInt("Níveis Concluidos 3") >= 1){
-		    hasDate3 = true;
-	    }
-
+    void checkDate (){
+		switch(slotToSave){
+			case 1:
+				if(PlayerPrefs.GetInt("Níveis Concluidos 1") >= 1){
+					hasData = true;
+				}
+			break;
+			case 2:
+				if(PlayerPrefs.GetInt("Níveis Concluidos 2") >= 1){
+					hasData = true;
+				}
+			break;
+			case 3:
+				if(PlayerPrefs.GetInt("Níveis Concluidos 3") >= 1){
+					hasData = true;
+				}
+			break; 
+		}
     }
 
     void destroyDate (){
-        switch(slotToSave){
-	        case 1:
-			    PlayerPrefs.SetInt("Níveis Concluidos 1", 0);
-			    PlayerPrefs.SetInt("Cristais Coletados 1", 0);
-			    PlayerPrefs.SetInt("Master Cristais Coletados 1", 0);
-			    PlayerPrefs.SetInt("Vidas 1", 3);
-			    PlayerPrefs.SetInt("HP 1", 3);
-	        break;
-	        case 2:
-			    PlayerPrefs.SetInt("Níveis Concluidos 2", 0);
-			    PlayerPrefs.SetInt("Cristais Coletados 2", 0);
-			    PlayerPrefs.SetInt("Master Cristais Coletados 2", 0);
-			    PlayerPrefs.SetInt("Vidas 2", 0);
-			    PlayerPrefs.SetInt("HP 2", 3); 
-	        break;
-	        case 3:
-			    PlayerPrefs.SetInt("Níveis Concluidos 3", 0);
-			    PlayerPrefs.SetInt("Cristais Coletados 3", 0);
-			    PlayerPrefs.SetInt("Master Cristais Coletados 3", 0);
-			    PlayerPrefs.SetInt("Vidas 3", 0);
-			    PlayerPrefs.SetInt("HP 3", 3); 
-	        break;
-	    }
+		levelsFinish = 0;
+		crystalCollect = 0;
+		masterCrystals = 0;
+		currentLifes = 0;
+		saveDate ();
     }
 
-    void saveDate (){ //Lógica do Save APENAS inGame
+    void saveDate (){
 	    switch(slotToSave){
 			case 1:
 				PlayerPrefs.SetInt("Níveis Concluidos 1", levelsFinish);
@@ -173,81 +134,61 @@ public class data_behaviour : MonoBehaviour {
 		}
     }
 
-    /* ############################## FUNÇÕES PARA OS BOTÕES DA CENA "SAVENINGAME" #######
-    ################################# EXCLUSIVAMENTE PARA AÇÃO DOS BOTÕES ################
-    */
-
-    public void loadDate1 (){  //Lógica do loading APENAS para Botões
-	    checkDate();
-		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
-		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 1");
-		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 1");
-		currentLifes = PlayerPrefs.GetInt("Vidas 1");
+    public void loadData(){
+		checkDate();	
+		if (loadingOption){
+			switch(slotToSave){
+				case 1:
+					levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
+					crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 1");
+					masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 1");
+					currentLifes = PlayerPrefs.GetInt("Vidas 1");	
+					savePlease = false; 
+				break;
+				case 2:
+					levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 2");
+					crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 2");
+					masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 2");
+					currentLifes = PlayerPrefs.GetInt("Vidas 2");
+					savePlease = false;  
+				break;
+				case 3:
+					levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 3");
+					crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 3");
+					masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 3");
+					currentLifes = PlayerPrefs.GetInt("Vidas 3");
+					savePlease = false;  
+				break;
+			}
+		}	
     }
 
-    public void loadDate2 (){  //Lógica do loading APENAS para Botões
+    public void checkSaveData(){
 	    checkDate();
-		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 2");
-		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 2");
-		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 2");
-		currentLifes = PlayerPrefs.GetInt("Vidas 2");
-    }
-
-    public void loadDate3 (){  //Lógica do loading APENAS para Botões
-	    checkDate();
-		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 3");
-		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 3");
-		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 3");
-		currentLifes = PlayerPrefs.GetInt("Vidas 3");
-    }
-
-    public void saveDate1 (){ //Lógica do Save APENAS para Botões
-	    checkDate();
-	    if (hasDate1 == true){
-			anima.SetBool("transition", true);
-		} else {
-			destroyDate();
-		}
-    }
-
-    public void saveDate2 (){ //Lógica do Save APENAS para Botões
-	    checkDate();
-	    if (hasDate2 == true){
-			anima.SetBool("transition", true);
-		}
-    }
-    public void saveDate3 (){ //Lógica do Save APENAS para Botões
-	    checkDate();
-	    if (hasDate3 == true){
+	    if (hasData && newgameOption){
 			anima.SetBool("transition", true);
 		}
     }
 
 
-   public void ConfirmSaveIn (){ //Botão de salvar do dialogo se quer sobrescrever o dado
+    public void ConfirmSaveIn (){
 		switch(slotToSave){
 		case 1:
-			hasDate1 = false;
+			hasData = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 1", 0);
-			saveDate1();
 		break;
 		case 2:
-			hasDate2 = false;
+			hasData = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 2", 0);
-			saveDate2();
 		break;
 		case 3:
-			hasDate3 = false;
+			hasData = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 3", 0);
-			saveDate3();
 		break;
 		}
     }
 
-    public void CancelSaveIn (){ //Botão de cancelar do dialogo se quer sobrescrever o dado
+    public void CancelSaveIn (){
         anima.SetBool("transition", false);
-        hasDate1 = false;
-        hasDate2 = false;
-        hasDate3 = false;
     }
 }
