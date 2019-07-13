@@ -5,14 +5,12 @@ using UnityEngine.SceneManagement;
 public class scenes_manager : MonoBehaviour {
     static scenes_manager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
-    float duration; //Variavel para fazer contagem
-    bool  newGame; // Booleana para troca de cena
-    bool  loadGame; // Booleana para a troca de cena
+    public bool  newGame; // Booleana para troca de cena
+    public bool  loadGame; // Booleana para a troca de cena
 
     // ################ VARIÁVEIS QUE CONTROLAM A ENTRADA DE CENAS ##########################
 
     public bool sceneMenu;
-    public bool sceneSavenLoad;
     public bool sceneGamePlay;
 
     fade_behaviour FadeInOutBehaviour;
@@ -22,129 +20,94 @@ public class scenes_manager : MonoBehaviour {
 
     void Start (){ //Começa chamando o fadeIn e setando algumas variáveis
         loadCurrentFade();
-        loadCurrentScene();
-        PermanentInGame(); //Verifica se a cena deve permanecer em game;
-        FadeInOutBehaviour.playfadeIn = true;
+        permanentInGame(); //Verifica se a cena deve permanecer em game;
 
-	    duration = 0;
 	    newGame = false;
 	    loadGame = false;
     }
 
     void Update (){
+	    sceneAction();
+        sceneControl();
+    }
 
-	    CheckButtonWasPress(); // Realiza a ação de acordo com o botão que foi pressionado
+    void loadCurrentFade(){
+        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
+    }
 
-	    checkFunctions(); // Verifica quais funções precisam ser chamadas
+    void callFadeOut(){
+        FadeInOutBehaviour.playfadeOut = true;
+    }
 
+    void callFadeIn(){
+        FadeInOutBehaviour.playfadeIn = true;
     }
 
     // FUNÇÃO PARA MANDAR DADO ATRAVEZ DAS CENAS
 
     public void sceneControl() {
-        switch (activeScene.name) {
-            case "SavenLoad":
-                dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
-                if (newGame == true){
-                    dataBehaviour.newgameOption = true;
-                    newGame = false;
-                }
-                if (loadGame == true){
-                    dataBehaviour.loadingOption = true;
-                    loadGame = false;
-                }
-                loadCurrentFade();
-                callFadeIn();
-                loadGame = false;
-            break;
+        if(activeScene != SceneManager.GetActiveScene()) {
+            activeScene = SceneManager.GetActiveScene();
+            loadCurrentFade();
+            switch (activeScene.name){
+                case "Menu":
+                    sceneMenu = false;
+                    callFadeIn();
+                break;
+                case "SavenLoad":
+                    dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
+                    if (newGame == true){
+                        dataBehaviour.newgameOption = true;
+                        newGame = false;
+                    }
+                    if (loadGame == true){
+                        dataBehaviour.loadingOption = true;
+                        loadGame = false;
+                    }
+                    callFadeIn();
+                break;
+                case "Gameplay":
+                    sceneGamePlay = false;
+                    callFadeIn();
+                break;
+            }
         }
-    }
-
-    public void loadCurrentScene() {
-        activeScene = SceneManager.GetActiveScene();
     }
 
     /* ######################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
     ########################### AS FUNÇÕES DESSE PONTO EM DIANTE SÃO RELACIONADAS A: #######
-    ########################### CHAMAR FADEIND/OUT #########################################
     ########################### VERIFICAR QUAL BOTÃO FOI PRESSIONADO #######################
     ########################### GARANTIR A PERMANENCIA DO SCRIPT DURANTE A TROCA DE CENAS ## 
-    ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/
+    ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/  
 
-    public void loadCurrentFade(){
-        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
-    }
-
-    public void callFadeOut(){
-        FadeInOutBehaviour.playfadeOut = true;
-    }
-
-    public void callFadeIn(){
-        FadeInOutBehaviour.playfadeIn = true;
-    }
-
-    void checkFunctions (){ // Verifica quais funções precisam ser chamadas
+    void sceneAction (){ // Verifica quais funções precisam ser chamadas
 		if(sceneMenu == true){
-			sceneMenu = false;
-			callMenu();
-            callFadeIn();
+            callMenu();
             instanceRef = null;
             Destroy(this.gameObject);
         }
-		if(sceneSavenLoad == true){
-            sceneSavenLoad = false;
-			callSavenLoad();
-        }
 		if(sceneGamePlay == true){
-            sceneGamePlay = false;
-			callGamePlay();
-            callFadeIn();
+            callGamePlay();	
         }
-
-    }
-
-    void CheckButtonWasPress (){
-        if( newGame == true || loadGame == true ){
-            callFadeOut();
-		    if(duration >= 1){
-		 	    duration = 0;
-		 	    callSavenLoad();
-		    } else {
-		 	    duration += Time.deltaTime;
-		    }
+        if(newGame == true || loadGame == true){
+            callSavenLoad();
  	    }
     }
 
-    void PermanentInGame (){
+    void permanentInGame (){
 	    if(instanceRef == null){
 	        DontDestroyOnLoad(this);
             instanceRef = this;
         }
     }
 
-    /* ############## FUNÇÕES QUE ESTÃO PROGRAMADAS NOS BOTÕES DA TELA MENU ##########
-    ################# ESSAS SÃO AS FUNÇÕES QUE FUNCIONAM APENAS NA CENA "MENU"########
-    ################# TODAS ESTÃO SETADAS EM BOTÕES ################################## */
-
-    public void NewGame (){
-	    newGame = true;
-    }
-
-    public void LoadGame (){
-        loadGame = true;
-    }
-
-    public void QuitGame (){
-	    Application.Quit();
-    }
-
     /* ---------------- CONTROLE DA TRANSIÇÃO DE CENAS -----------------------*/
 
-    void callGamePlay(){
-        SceneManager.LoadScene("Gameplay");
-    }
     void callMenu (){
         SceneManager.LoadScene("Menu");
+    }
+    void callGamePlay(){
+        SceneManager.LoadScene("Gameplay");
     }
     void callSavenLoad (){
         SceneManager.LoadScene("SavenLoad");

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class data_behaviour : MonoBehaviour {
 
-    public bool  loadingOption;
-    public bool  newgameOption;
+	public bool newgameOption;
+	public bool loadingOption;
 
     public Animator anima;
     static data_behaviour instanceRef;
@@ -14,9 +14,6 @@ public class data_behaviour : MonoBehaviour {
     public Text btnText1; //texto do botão 1 (para ativa-lo)
     public Text btnText2; //texto do botão 2 (para ativa-lo)
     public Text btnText3; //texto do botão 3 (para ativa-lo)
-
-    public bool  wantBack; // Voltar tela Inicial
-    public bool  goToGamePlay;
 
     public bool  savePlease; //Salve o game
     bool  hasDate1; //Booleana para verificar se possui data nos slot
@@ -53,8 +50,6 @@ public class data_behaviour : MonoBehaviour {
     void Start (){
 
         ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
-        ScenesManager.loadCurrentScene();
-        ScenesManager.sceneControl();
 
         if (instanceRef == null){
 	        instanceRef = this;
@@ -66,11 +61,7 @@ public class data_behaviour : MonoBehaviour {
     }
 
     void Update (){
-
-	    buttonIsPress(); //Verifica se o butão está pressionado
         checkIfIsSave(); //Verifica se é necessário salvar o jogo
-
-
     }
 
     /*########################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
@@ -186,119 +177,48 @@ public class data_behaviour : MonoBehaviour {
     ################################# EXCLUSIVAMENTE PARA AÇÃO DOS BOTÕES ################
     */
 
-    void buttonIsPress (){  //Verifica se algum botão foi pressionado
-		    //O Jogo deve ser Salvo
-		if(goToGamePlay == true){
-			if(duration >= 1){
-			    duration = 0;
-                goToGamePlay = false;
-                ScenesManager.sceneGamePlay = true;
-            } else {
-			    duration += Time.deltaTime;
-			}
-		}
-		if(wantBack == true){
-			if(duration >= 1){
-				wantBack = false;
-                duration = 0;
-                ScenesManager.sceneMenu = true;
-                checkToDestroy(); //Verifica a permanência entre as cenas e se precisa salvar
-            } else {
-			    duration += Time.deltaTime;
-			}
-		}
-    }
-
     public void loadDate1 (){  //Lógica do loading APENAS para Botões
 	    checkDate();
-		if(loadingOption == true){
-            levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
-            crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 1");
-            masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 1");
-            currentLifes = PlayerPrefs.GetInt("Vidas 1");
-            slotToSave = 1;
-            goToGamePlay =  true;
-            loadingOption = false;
-            newgameOption = false;
-	    }
+		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 1");
+		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 1");
+		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 1");
+		currentLifes = PlayerPrefs.GetInt("Vidas 1");
     }
 
     public void loadDate2 (){  //Lógica do loading APENAS para Botões
 	    checkDate();
-		if(loadingOption == true){
-            levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 2");
-            crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 2");
-            masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 2");
-            currentLifes = PlayerPrefs.GetInt("Vidas 2");
-            slotToSave = 2;
-            goToGamePlay =  true;
-            loadingOption = false;
-            newgameOption = false;
-	    }
+		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 2");
+		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 2");
+		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 2");
+		currentLifes = PlayerPrefs.GetInt("Vidas 2");
     }
 
     public void loadDate3 (){  //Lógica do loading APENAS para Botões
 	    checkDate();
-		if(loadingOption == true){
-	        levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 3");
-	        crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 3");
-	        masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 3");
-	        currentLifes = PlayerPrefs.GetInt("Vidas 3");
-	        slotToSave = 3;
-            goToGamePlay =  true;
-	        loadingOption = false;
-	        newgameOption = false;
-	    }
+		levelsFinish = PlayerPrefs.GetInt("Níveis Concluidos 3");
+		crystalCollect = PlayerPrefs.GetInt("Cristais Coletados 3");
+		masterCrystals = PlayerPrefs.GetInt("Master Cristais Coletados 3");
+		currentLifes = PlayerPrefs.GetInt("Vidas 3");
     }
 
     public void saveDate1 (){ //Lógica do Save APENAS para Botões
 	    checkDate();
-		Debug.Log(newgameOption);
-		Debug.Log(hasDate1);
-	    if (newgameOption == true && hasDate1 == false){
-	        slotToSave = 1;
-	        destroyDate();
-            ScenesManager.callFadeOut();
-            goToGamePlay = true;
-	        loadingOption = false;
-	        newgameOption = false;
-		}else if(loadingOption == true) {
-			loadDate1();
-		} else if (newgameOption == true && hasDate1 == true){
-			slotToSave = 1;
+	    if (hasDate1 == true){
 			anima.SetBool("transition", true);
+		} else {
+			destroyDate();
 		}
     }
 
     public void saveDate2 (){ //Lógica do Save APENAS para Botões
 	    checkDate();
-	    if (newgameOption == true && hasDate2 == false){
-            slotToSave = 2;
-            destroyDate();
-            ScenesManager.callFadeOut();
-            goToGamePlay = true;
-            loadingOption = false;
-            newgameOption = false;
-        } else if(loadingOption == true) {
-			loadDate2();
-		} else if (newgameOption == true && hasDate2 == true){
-			slotToSave = 2;
+	    if (hasDate2 == true){
 			anima.SetBool("transition", true);
 		}
     }
     public void saveDate3 (){ //Lógica do Save APENAS para Botões
 	    checkDate();
-	    if (newgameOption == true && hasDate3 == false){
-	        slotToSave = 3;
-	        destroyDate();
-            ScenesManager.callFadeOut();
-            goToGamePlay = true;
-	        loadingOption = false;
-	        newgameOption = false;
-		}else if(loadingOption == true) {
-		    loadDate3();
-		} else if (newgameOption == true && hasDate3 == true){
-			slotToSave = 3;
+	    if (hasDate3 == true){
 			anima.SetBool("transition", true);
 		}
     }
@@ -309,19 +229,16 @@ public class data_behaviour : MonoBehaviour {
 		case 1:
 			hasDate1 = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 1", 0);
-			newgameOption = true;
 			saveDate1();
 		break;
 		case 2:
 			hasDate2 = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 2", 0);
-			newgameOption = true;
 			saveDate2();
 		break;
 		case 3:
 			hasDate3 = false;
 			PlayerPrefs.SetInt("Níveis Concluidos 3", 0);
-			newgameOption = true;
 			saveDate3();
 		break;
 		}
@@ -332,12 +249,5 @@ public class data_behaviour : MonoBehaviour {
         hasDate1 = false;
         hasDate2 = false;
         hasDate3 = false;
-    }
-
-    public void backToMenu (){ //Botão de voltar ao menu inicial
-        ScenesManager.callFadeOut();
-        loadingOption = false;
-        newgameOption = false;
-        wantBack = true;
     }
 }

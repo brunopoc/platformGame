@@ -9,13 +9,10 @@ public class fade_behaviour : MonoBehaviour {
     public float t = 1.0f;
     public bool  playfadeIn = false;
     public bool  playfadeOut = false;
-    public scenes_manager ScenesManager;
 
     void Start (){
 	    colorStart = renderoption.material.color;
         colorEnd = new Color(colorStart.r, colorStart.g, colorStart.b, 0);
-        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
-        ScenesManager.loadCurrentFade();
     }
 
     void Update (){
