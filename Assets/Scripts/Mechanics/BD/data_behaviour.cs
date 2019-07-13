@@ -56,7 +56,6 @@ public class data_behaviour : MonoBehaviour {
         ScenesManager.loadCurrentScene();
         ScenesManager.sceneControl();
 
-
         if (instanceRef == null){
 	        instanceRef = this;
 	        DontDestroyOnLoad(this);
@@ -254,6 +253,8 @@ public class data_behaviour : MonoBehaviour {
 
     public void saveDate1 (){ //Lógica do Save APENAS para Botões
 	    checkDate();
+		Debug.Log(newgameOption);
+		Debug.Log(hasDate1);
 	    if (newgameOption == true && hasDate1 == false){
 	        slotToSave = 1;
 	        destroyDate();

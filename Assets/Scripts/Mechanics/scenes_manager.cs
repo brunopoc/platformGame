@@ -47,9 +47,11 @@ public class scenes_manager : MonoBehaviour {
                 dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
                 if (newGame == true){
                     dataBehaviour.newgameOption = true;
+                    newGame = false;
                 }
                 if (loadGame == true){
                     dataBehaviour.loadingOption = true;
+                    loadGame = false;
                 }
                 loadCurrentFade();
                 callFadeIn();
@@ -106,8 +108,6 @@ public class scenes_manager : MonoBehaviour {
             callFadeOut();
 		    if(duration >= 1){
 		 	    duration = 0;
-                newGame = false;
-                loadGame = false;
 		 	    callSavenLoad();
 		    } else {
 		 	    duration += Time.deltaTime;

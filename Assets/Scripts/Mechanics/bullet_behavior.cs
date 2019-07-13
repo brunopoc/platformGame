@@ -8,11 +8,9 @@ public class bullet_behavior : MonoBehaviour {
     public float velocidade;
     public bool  bullet_die;
     public float destroyItNow;
-    public player_behaviour player_behavior;
 
     void Start (){
         bullet = this.gameObject;
-        player_behavior = GameObject.Find("Player").GetComponent<player_behaviour>();
     }
 
     void Update (){
@@ -29,13 +27,6 @@ public class bullet_behavior : MonoBehaviour {
         if(bullet_die == true){ //Se a variavél receber true a bala também é destruida
             Destroy(bullet);
             bullet_die = false;
-        }
-    }
-
-    void OnTriggerEnter2D ( Collider2D coll  ){
-        if(coll.gameObject.tag == "Player"){       
-    	    player_behavior.canDamage = false;
-    	    bullet_die = true;
         }
     }
 }
