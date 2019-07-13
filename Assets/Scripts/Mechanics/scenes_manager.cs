@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class scenes_manager : MonoBehaviour {
-
-    UnityEngine.SceneManagement.SceneManager newScene; //Variável para a troca de cenas
     static scenes_manager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
 
     float duration; //Variavel para fazer contagem
@@ -17,8 +15,8 @@ public class scenes_manager : MonoBehaviour {
     public bool sceneSavenLoad;
     public bool sceneGamePlay;
 
-    public fade_behaviour FadeInOutBehaviour;
-    public data_behaviour dataBehaviour;
+    fade_behaviour FadeInOutBehaviour;
+    data_behaviour dataBehaviour;
 
     public Scene activeScene;
 
@@ -31,10 +29,6 @@ public class scenes_manager : MonoBehaviour {
 	    duration = 0;
 	    newGame = false;
 	    loadGame = false;
-
-		if(instanceRef == null){    //Também verifica se o objeto deve ser mantido
-		    DontDestroyOnLoad(this);
-		}
     }
 
     void Update (){
@@ -53,16 +47,13 @@ public class scenes_manager : MonoBehaviour {
                 dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
                 if (newGame == true){
                     dataBehaviour.newgameOption = true;
-                    loadCurrentFade();
-                    callFadeIn();
-                    newGame = false;
                 }
                 if (loadGame == true){
                     dataBehaviour.loadingOption = true;
-                    loadCurrentFade();
-                    callFadeIn();
-                    loadGame = false;
                 }
+                loadCurrentFade();
+                callFadeIn();
+                loadGame = false;
             break;
         }
     }
@@ -91,7 +82,6 @@ public class scenes_manager : MonoBehaviour {
     }
 
     void checkFunctions (){ // Verifica quais funções precisam ser chamadas
-
 		if(sceneMenu == true){
 			sceneMenu = false;
 			callMenu();
@@ -112,24 +102,17 @@ public class scenes_manager : MonoBehaviour {
     }
 
     void CheckButtonWasPress (){
-
-        if( newGame == true){
+        if( newGame == true || loadGame == true ){
+            callFadeOut();
 		    if(duration >= 1){
 		 	    duration = 0;
+                newGame = false;
+                loadGame = false;
 		 	    callSavenLoad();
 		    } else {
 		 	    duration += Time.deltaTime;
 		    }
  	    }
- 	    if( loadGame == true){
-		    if(duration >= 1){
-		 	    duration = 0;
-		 	    callSavenLoad();
-		    } else {
-		 	    duration += Time.deltaTime;
-		    }
- 	    }
-
     }
 
     void PermanentInGame (){
@@ -143,14 +126,11 @@ public class scenes_manager : MonoBehaviour {
     ################# ESSAS SÃO AS FUNÇÕES QUE FUNCIONAM APENAS NA CENA "MENU"########
     ################# TODAS ESTÃO SETADAS EM BOTÕES ################################## */
 
-
     public void NewGame (){
-        callFadeOut();
 	    newGame = true;
     }
 
     public void LoadGame (){
-        callFadeOut();
         loadGame = true;
     }
 

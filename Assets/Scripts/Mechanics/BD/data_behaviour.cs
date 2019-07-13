@@ -52,7 +52,7 @@ public class data_behaviour : MonoBehaviour {
 
     void Start (){
 
-        ScenesManager = GameObject.Find("SceneManager").GetComponent<scenes_manager>();
+        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
         ScenesManager.loadCurrentScene();
         ScenesManager.sceneControl();
 
