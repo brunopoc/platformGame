@@ -3,24 +3,22 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class scenes_manager : MonoBehaviour {
-    static scenes_manager instanceRef; //Instancia do próprio script (que possui o nome de ScenesManager)
+    static scenes_manager instanceRef;
 
-    public bool  newGame; // Booleana para troca de cena
-    public bool  loadGame; // Booleana para a troca de cena
-
-    // ################ VARIÁVEIS QUE CONTROLAM A ENTRADA DE CENAS ##########################
+    public bool  newGame;
+    public bool  loadGame;
 
     public bool sceneMenu;
     public bool sceneGamePlay;
 
     fade_behaviour FadeInOutBehaviour;
-    data_behaviour dataBehaviour;
+    data_savenload dataSaveNLoad;
 
     public Scene activeScene;
 
-    void Start (){ //Começa chamando o fadeIn e setando algumas variáveis
+    void Start (){
         loadCurrentFade();
-        permanentInGame(); //Verifica se a cena deve permanecer em game;
+        permanentInGame();
 
 	    newGame = false;
 	    loadGame = false;
@@ -43,8 +41,6 @@ public class scenes_manager : MonoBehaviour {
         FadeInOutBehaviour.playfadeIn = true;
     }
 
-    // FUNÇÃO PARA MANDAR DADO ATRAVEZ DAS CENAS
-
     public void sceneControl() {
         if(activeScene != SceneManager.GetActiveScene()) {
             activeScene = SceneManager.GetActiveScene();
@@ -55,13 +51,13 @@ public class scenes_manager : MonoBehaviour {
                     callFadeIn();
                 break;
                 case "SavenLoad":
-                    dataBehaviour = GameObject.Find("date_behaviour").GetComponent<data_behaviour>();
+                    dataSaveNLoad = GameObject.Find("UI").GetComponent<data_savenload>();
                     if (newGame == true){
-                        dataBehaviour.newgameOption = true;
+                        dataSaveNLoad.newgameOption = true;
                         newGame = false;
                     }
                     if (loadGame == true){
-                        dataBehaviour.loadingOption = true;
+                        dataSaveNLoad.loadingOption = true;
                         loadGame = false;
                     }
                     callFadeIn();
@@ -74,13 +70,7 @@ public class scenes_manager : MonoBehaviour {
         }
     }
 
-    /* ######################## FUNÇÕES PARA EXECUÇÃO DO SCRIPT ############################
-    ########################### AS FUNÇÕES DESSE PONTO EM DIANTE SÃO RELACIONADAS A: #######
-    ########################### VERIFICAR QUAL BOTÃO FOI PRESSIONADO #######################
-    ########################### GARANTIR A PERMANENCIA DO SCRIPT DURANTE A TROCA DE CENAS ## 
-    ########################### VERIFICAR A NECESSIDADE DE CHAMAR ALGUM MÉTODO #############*/  
-
-    void sceneAction (){ // Verifica quais funções precisam ser chamadas
+    void sceneAction (){
 		if(sceneMenu == true){
             callMenu();
             instanceRef = null;
@@ -100,8 +90,6 @@ public class scenes_manager : MonoBehaviour {
             instanceRef = this;
         }
     }
-
-    /* ---------------- CONTROLE DA TRANSIÇÃO DE CENAS -----------------------*/
 
     void callMenu (){
         SceneManager.LoadScene("Menu");
