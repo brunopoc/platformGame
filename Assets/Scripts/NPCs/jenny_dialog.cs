@@ -25,7 +25,6 @@ public class jennyDialog : MonoBehaviour {
     void OnTriggerEnter2D ( Collider2D coll  ){
         if(coll.gameObject.tag == "Player" && contDialog == 0){
             contDialog = 1;
-            player_behavior.canMove = false;
         }
     }
 
@@ -90,7 +89,6 @@ public class jennyDialog : MonoBehaviour {
 	    if(contDialog == 9 && Input.GetKeyDown("z") && dialog.hasFinishCheck == true){
 		    contDialog = 10;
 		    dialog.animaAction = "end";
-		    player_behavior.canMove = true;
 		    anima.SetBool("pulando", true);
 	    }
     }
