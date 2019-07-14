@@ -4,8 +4,14 @@ using System.Collections;
 [RequireComponent (typeof (controller2D))]
 public class player_behaviour :  MonoBehaviour {
 
+    float jumpHeight = 1.5f;
+    float timeToJumpApex = .4f;
+
+    float gravity;
+    float jumpVelocity;
     float moveSpeed = 6;
-    float gravity = -20;
+
+ 
     Vector3 velocity;
 
     controller2D controller;
@@ -16,11 +22,22 @@ public class player_behaviour :  MonoBehaviour {
         player_lifebar = GameObject.Find("player").GetComponent<player_lifebar>();
         controller = GetComponent<controller2D>();
         anime = GetComponentInChildren<Animator>();
-
+        gravity = -(2 * jumpHeight)/Mathf.Pow(timeToJumpApex, 2);
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
     }
 
     void Update (){
+
+        if(controller.collisions.above || controller.collisions.below){
+            velocity.y = 0;
+        }
+
+
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        if(Input.GetKeyDown(KeyCode.Space) && controller.collisions.below){
+            velocity.y = jumpVelocity;
+        }
 
         velocity.x = input.x * moveSpeed;
         velocity.y += gravity * Time.deltaTime;
