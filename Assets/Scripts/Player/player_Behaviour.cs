@@ -4,7 +4,8 @@ using System.Collections;
 [RequireComponent (typeof (controller2D))]
 public class player_behaviour :  MonoBehaviour {
 
-    float gravity = -5;
+    float moveSpeed = 6;
+    float gravity = -20;
     Vector3 velocity;
 
     controller2D controller;
@@ -19,6 +20,9 @@ public class player_behaviour :  MonoBehaviour {
     }
 
     void Update (){
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        velocity.x = input.x * moveSpeed;
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
