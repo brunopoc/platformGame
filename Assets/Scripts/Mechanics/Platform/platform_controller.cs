@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class platform_controller : raycast_controller{
-    
-    public Vector3 move;
+
     public LayerMask passengerMask;
+
+    public Vector3[] localWaypoints;
+    Vector3[] globalWaypoints;
+
+    public float speed;
+    public bool cyclic;
+    int fromWaypointIndex;
+    float percentBetweenWaypoints;
 
     List<PassengerMovement> passengerMovements;
     Dictionary<Transform, controller2D> passengerDictionary = new Dictionary<Transform, controller2D>();
 
-    public override void Start(){
+    public override void Start() {
         base.Start();
+
+        globalWaypoints = new Vector3[localWaypoints.Length];
+        for (int i = 0; i < localWaypoints.Length; i++){
+            globalWaypoints[i] = localWaypoints[i] + transform.position;
+        }
     }
 
-    void Update(){
+    void Update() {
 
         UpdateRaycastOrigins();
 
-        Vector3 velocity = move * Time.deltaTime;
+        Vector3 velocity = CalculatePlatformMovement();
 
         CalculatePassengerMovement(velocity);
         MovePassengers (true);
@@ -26,7 +38,29 @@ public class platform_controller : raycast_controller{
         MovePassengers (false);
     }
 
-    void MovePassengers(bool beforeMovePlatform){
+    Vector3 CalculatePlatformMovement(){
+        fromWaypointIndex %= globalWaypoints.Length;
+        int toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;
+        float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
+        percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
+        
+        Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], percentBetweenWaypoints);
+        
+        if(percentBetweenWaypoints >= 1){
+            percentBetweenWaypoints = 0;
+            fromWaypointIndex ++;
+            if(!cyclic){
+                if(fromWaypointIndex >= globalWaypoints.Length - 1){
+                    fromWaypointIndex = 0;
+                    System.Array.Reverse(globalWaypoints);
+                }
+            }
+        }
+
+        return newPos - transform.position;
+    }
+
+    void MovePassengers(bool beforeMovePlatform) {
         foreach(PassengerMovement passenger in passengerMovements){
             if(!passengerDictionary.ContainsKey(passenger.transform)){
                 passengerDictionary.Add(passenger.transform, passenger.transform.GetComponent<controller2D>());
@@ -37,7 +71,7 @@ public class platform_controller : raycast_controller{
         }
     }
 
-    void CalculatePassengerMovement(Vector3 velocity){
+    void CalculatePassengerMovement(Vector3 velocity) {
         HashSet<Transform> movePassengers = new HashSet<Transform>();
         passengerMovements = new List<PassengerMovement>();
         float directionX = Mathf.Sign(velocity.x);
@@ -65,7 +99,7 @@ public class platform_controller : raycast_controller{
 			}
 		}
 
-        if(velocity.x != 0){
+        if(velocity.x != 0) {
             float rayLength  = Mathf.Abs(velocity.x) + skinWidth;
             for(int i = 0; i < horizontalRayCount; i++){
                 Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
@@ -116,6 +150,18 @@ public class platform_controller : raycast_controller{
             velocity = _velocity;
             standingOnPlatform = _standingOnPlatform;
             moveBeforePlatform = _moveBeforePlatform;
+        }
+    }
+
+    void OnDrawGizmos() {
+        if(localWaypoints != null){
+            Gizmos.color = Color.red;
+            float size = .1f;
+            for (int i = 0; i < localWaypoints.Length; i++){
+                Vector3 globalWaypointPos = (Application.isPlaying)? globalWaypoints[i] : localWaypoints[i] + transform.position;
+                Gizmos.DrawLine(globalWaypointPos - Vector3.up * size, globalWaypointPos + Vector3.up * size);
+                Gizmos.DrawLine(globalWaypointPos - Vector3.left * size, globalWaypointPos + Vector3.left * size);
+            }
         }
     }
 }
