@@ -105,7 +105,7 @@ public class platform_controller : raycast_controller{
 
                 Debug.DrawRay(rayOrigin, Vector2.up * rayLength,Color.red);
 
-				if (hit) {
+				if (hit && hit.distance != 0) {
 					if (!movePassengers.Contains(hit.transform)) {
 						movePassengers.Add(hit.transform);
 						float pushX = (directionY == 1)?velocity.x:0;
@@ -123,7 +123,7 @@ public class platform_controller : raycast_controller{
                 Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
                 rayOrigin += Vector2.up * (horizontalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, passengerMask); 
-                if (hit) {
+                if (hit && hit.distance != 0) {
                     if (!movePassengers.Contains(hit.transform)) {
                         movePassengers.Add(hit.transform);
                         float pushX = velocity.x - (hit.distance - skinWidth) * directionX;
@@ -144,7 +144,7 @@ public class platform_controller : raycast_controller{
 
                 Debug.DrawRay(rayOrigin, Vector2.up * rayLength,Color.red);
 
-				if (hit) {
+				if (hit && hit.distance != 0) {
 					if (!movePassengers.Contains(hit.transform)) {
 						movePassengers.Add(hit.transform);
 						float pushX = velocity.x;

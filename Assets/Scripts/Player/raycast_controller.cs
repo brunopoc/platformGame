@@ -20,8 +20,11 @@ public class raycast_controller : MonoBehaviour{
     public BoxCollider2D collider;
     public RaycastOrigins raycastOrigins;
 
-    public virtual void Start(){
+    public virtual void Awake(){
         collider = GetComponent<BoxCollider2D>();
+    }
+
+    public virtual void Start(){
         CalculateRaySpacing();
     }
 
@@ -32,7 +35,7 @@ public class raycast_controller : MonoBehaviour{
         raycastOrigins.bottomLeft  = new Vector2 (bounds.min.x, bounds.min.y);
         raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
         raycastOrigins.topLeft     = new Vector2 (bounds.min.x, bounds.max.y);
-        raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.max.y);
+        raycastOrigins.topRight    = new Vector2 (bounds.max.x, bounds.max.y);
     }
 
     public void CalculateRaySpacing(){
