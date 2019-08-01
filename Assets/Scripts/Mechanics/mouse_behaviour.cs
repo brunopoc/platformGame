@@ -1,16 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
-public class mouse_behaviour : MonoBehaviour {
+public class mouse_behaviour : MonoBehaviour
+{
 
     public GameObject position;
     Vector2 newMousePosition;
 
-    void Start (){
-        position.transform.position = Input.mousePosition ;
+    void Start()
+    {
+        position.transform.position = Input.mousePosition;
     }
 
-    void Update (){
+    void Update()
+    {
         Vector3 ray = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         newMousePosition.x = ray.x;

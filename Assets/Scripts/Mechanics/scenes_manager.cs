@@ -2,11 +2,12 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class scenes_manager : MonoBehaviour {
+public class scenes_manager : MonoBehaviour
+{
     static scenes_manager instanceRef;
 
-    public bool  newGame;
-    public bool  loadGame;
+    public bool newGame;
+    public bool loadGame;
 
     public bool sceneMenu;
     public bool sceneGamePlay;
@@ -16,88 +17,107 @@ public class scenes_manager : MonoBehaviour {
 
     public Scene activeScene;
 
-    void Start (){
+    void Start()
+    {
         loadCurrentFade();
         permanentInGame();
 
-	    newGame = false;
-	    loadGame = false;
+        newGame = false;
+        loadGame = false;
     }
 
-    void Update (){
-	    sceneAction();
+    void Update()
+    {
+        sceneAction();
         sceneControl();
     }
 
-    void loadCurrentFade(){
+    void loadCurrentFade()
+    {
         FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
     }
 
-    void callFadeOut(){
+    void callFadeOut()
+    {
         FadeInOutBehaviour.playfadeOut = true;
     }
 
-    void callFadeIn(){
+    void callFadeIn()
+    {
         FadeInOutBehaviour.playfadeIn = true;
     }
 
-    public void sceneControl() {
-        if(activeScene != SceneManager.GetActiveScene()) {
+    public void sceneControl()
+    {
+        if (activeScene != SceneManager.GetActiveScene())
+        {
             activeScene = SceneManager.GetActiveScene();
             loadCurrentFade();
-            switch (activeScene.name){
+            switch (activeScene.name)
+            {
                 case "Menu":
                     sceneMenu = false;
                     callFadeIn();
-                break;
+                    break;
                 case "SavenLoad":
                     dataSaveNLoad = GameObject.Find("UI").GetComponent<data_savenload>();
-                    if (newGame == true){
+                    if (newGame == true)
+                    {
                         dataSaveNLoad.newgameOption = true;
                         newGame = false;
                     }
-                    if (loadGame == true){
+                    if (loadGame == true)
+                    {
                         dataSaveNLoad.loadingOption = true;
                         loadGame = false;
                     }
                     callFadeIn();
-                break;
+                    break;
                 case "Gameplay":
                     sceneGamePlay = false;
                     callFadeIn();
-                break;
+                    break;
             }
         }
     }
 
-    void sceneAction (){
-		if(sceneMenu == true){
+    void sceneAction()
+    {
+        if (sceneMenu == true)
+        {
             callMenu();
             instanceRef = null;
             Destroy(this.gameObject);
         }
-		if(sceneGamePlay == true){
-            callGamePlay();	
+        if (sceneGamePlay == true)
+        {
+            callGamePlay();
         }
-        if(newGame == true || loadGame == true){
+        if (newGame == true || loadGame == true)
+        {
             callSavenLoad();
- 	    }
+        }
     }
 
-    void permanentInGame (){
-	    if(instanceRef == null){
-	        DontDestroyOnLoad(this);
+    void permanentInGame()
+    {
+        if (instanceRef == null)
+        {
+            DontDestroyOnLoad(this);
             instanceRef = this;
         }
     }
 
-    void callMenu (){
+    void callMenu()
+    {
         SceneManager.LoadScene("Menu");
     }
-    void callGamePlay(){
+    void callGamePlay()
+    {
         SceneManager.LoadScene("Gameplay");
     }
-    void callSavenLoad (){
+    void callSavenLoad()
+    {
         SceneManager.LoadScene("SavenLoad");
     }
 }
