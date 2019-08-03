@@ -49,7 +49,9 @@ public class player_behaviour : MonoBehaviour
 
         CalculateVelocity();
         HandleWallSliding();
+        animatorPlayerControl();
 
+        transform.localScale = new Vector3(controller.collisions.faceDir, 1, 1);
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
         if (controller.collisions.above || controller.collisions.below)
@@ -146,71 +148,53 @@ public class player_behaviour : MonoBehaviour
     }
 
 
-    /*     IEnumerator animatorPlayerControl (){
-            if(canDamage == false || canMove == false){
-                anime.SetFloat("walk", 0); 
-                anime.SetBool("parado", true);
-            }else{
-                if(Input.GetAxis("Horizontal") == 0){ 
-                    anime.SetFloat("walk", 0);
-                    anime.SetBool("parado", true);
-                }else if(Input.GetAxis("Horizontal") > 0){ 			
-                    anime.SetFloat("walk", Mathf.Abs(Input.GetAxis("Horizontal")));
-                    anime.SetBool("parado", false);
-                }else{
-                    anime.SetFloat("walk", Input.GetAxis("Horizontal"));
-                    anime.SetBool("parado", false);
-                }
+    void animatorPlayerControl()
+    {
+        anime.SetFloat("walk", directionalInput.x);
+        anime.SetBool("wall_jump", wallSliding);
+        anime.SetBool("parado", directionalInput.x == 0);
+        anime.SetBool("mode_s", controller.collisions.faceDir == -1);
 
-                if(player.transform.localScale.x == 1){
-                    anime.SetBool("mode_s", false);
-                }else if(player.transform.localScale.x == -1){
-                    anime.SetBool("mode_s", true);
-                }
+        if(controller.collisions.below){   
+            anime.SetBool("jumping", false);
+            anime.SetBool("falling", false);
+        }
 
-                if(player.velocity.y > 1) {
-                    anime.SetBool("jumping", true);
-                    anime.SetBool("falling", false);
-                } else if (player.velocity.y < -1){
-                    anime.SetBool("jumping", false);
-                    anime.SetBool("falling", true);
-                } else if(player.velocity.y == 0) {
-                    anime.SetBool("jumping", false);
-                    anime.SetBool("falling", false);
-                }
 
-                if(Input.GetKeyDown("z")){
-                    canShootAgain = false;
-                    timeToShootAgain = 0;
-                }
-
-                if (canDash != true) {
-                    anime.SetBool("dash", true);
-                }
-                else {
-                    anime.SetBool("dash", false);
-                }
-
-                if (canShootAgain == false){
-                    anime.SetBool("fire", true);
-                    timeToShootAgain += Time.deltaTime;
-                    if (timeToShootAgain > 1.0f)
-                    {
-                        canShootAgain = true;
-                        anime.SetBool("fire", false);
-                        timeToShootAgain = 0;
-                        yield break;
-                    }
-                }
-                if (onWall == true) {
-                    anime.SetBool("wall_jump", true);
-                }
-                if (onWall == false)
+/*          
+            if (transform.localScale.x == 1)
+            {
+                anime.SetBool("mode_s", false);
+            }
+            else if (transform.localScale.x == -1)
+            {
+                anime.SetBool("mode_s", true);
+            }
+            if (Input.GetKeyDown("z"))
+            {
+                canShootAgain = false;
+                timeToShootAgain = 0;
+            }
+            if (canShootAgain == false)
+            {
+                anime.SetBool("fire", true);
+                timeToShootAgain += Time.deltaTime;
+                if (timeToShootAgain > 1.0f)
                 {
-                    anime.SetBool("wall_jump", false);
-                    canJumpWall = false;
+                    canShootAgain = true;
+                    anime.SetBool("fire", false);
+                    timeToShootAgain = 0;
+                    yield break;
                 }
             }
-            yield return 0;
-        } */
+
+            if (canDash != true)
+            {
+                anime.SetBool("dash", true);
+            }
+            else
+            {
+                anime.SetBool("dash", false);
+            } */
+    }
 }
