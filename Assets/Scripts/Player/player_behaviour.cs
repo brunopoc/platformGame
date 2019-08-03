@@ -22,7 +22,7 @@ public class player_behaviour : MonoBehaviour
     float gravity;
     float maxJumpVelocity;
     float minJumpVelocity;
-    float moveSpeed = 4;
+    float moveSpeed = 2.8f;
     Vector3 velocity;
     float velocityXSmoothing;
 
@@ -46,7 +46,6 @@ public class player_behaviour : MonoBehaviour
 
     void Update()
     {
-
         CalculateVelocity();
         HandleWallSliding();
         animatorPlayerControl();
@@ -155,46 +154,51 @@ public class player_behaviour : MonoBehaviour
         anime.SetBool("parado", directionalInput.x == 0);
         anime.SetBool("mode_s", controller.collisions.faceDir == -1);
 
-        if(controller.collisions.below){   
+        if (controller.collisions.below)
+        {
             anime.SetBool("jumping", false);
             anime.SetBool("falling", false);
         }
+        else
+        {
+            anime.SetBool("jumping", (velocity.y >= 0));
+            anime.SetBool("falling", (velocity.y < 0));
+        }
 
+        /*          
+                    if (transform.localScale.x == 1)
+                    {
+                        anime.SetBool("mode_s", false);
+                    }
+                    else if (transform.localScale.x == -1)
+                    {
+                        anime.SetBool("mode_s", true);
+                    }
+                    if (Input.GetKeyDown("z"))
+                    {
+                        canShootAgain = false;
+                        timeToShootAgain = 0;
+                    }
+                    if (canShootAgain == false)
+                    {
+                        anime.SetBool("fire", true);
+                        timeToShootAgain += Time.deltaTime;
+                        if (timeToShootAgain > 1.0f)
+                        {
+                            canShootAgain = true;
+                            anime.SetBool("fire", false);
+                            timeToShootAgain = 0;
+                            yield break;
+                        }
+                    }
 
-/*          
-            if (transform.localScale.x == 1)
-            {
-                anime.SetBool("mode_s", false);
-            }
-            else if (transform.localScale.x == -1)
-            {
-                anime.SetBool("mode_s", true);
-            }
-            if (Input.GetKeyDown("z"))
-            {
-                canShootAgain = false;
-                timeToShootAgain = 0;
-            }
-            if (canShootAgain == false)
-            {
-                anime.SetBool("fire", true);
-                timeToShootAgain += Time.deltaTime;
-                if (timeToShootAgain > 1.0f)
-                {
-                    canShootAgain = true;
-                    anime.SetBool("fire", false);
-                    timeToShootAgain = 0;
-                    yield break;
-                }
-            }
-
-            if (canDash != true)
-            {
-                anime.SetBool("dash", true);
-            }
-            else
-            {
-                anime.SetBool("dash", false);
-            } */
+                    if (canDash != true)
+                    {
+                        anime.SetBool("dash", true);
+                    }
+                    else
+                    {
+                        anime.SetBool("dash", false);
+                    } */
     }
 }
