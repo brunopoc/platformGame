@@ -26,6 +26,14 @@ public class player_input : MonoBehaviour
         {
             Player.OnJumpInputUp();
         }
+        if (Input.GetKeyDown("z"))
+        {
+            Player.Shoot();
+        }
+        if (Input.GetKeyDown("x"))
+        {
+            Player.Dash();
+        }
     }
 
 }

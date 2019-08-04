@@ -8,6 +8,7 @@ public class player_behaviour : MonoBehaviour
     public float maxJumpHeight = 1.5f;
     public float minJumpHeight = .5f;
     public float timeToJumpApex = .4f;
+    public float dashSpeed = 30;
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
 
@@ -19,24 +20,32 @@ public class player_behaviour : MonoBehaviour
     public float wallStickTime = .25f;
     float timeToWallUnstick;
 
+    int bullet_max = 3;
     float gravity;
     float maxJumpVelocity;
     float minJumpVelocity;
     float moveSpeed = 2.8f;
-    Vector3 velocity;
     float velocityXSmoothing;
+    Vector3 velocity;
 
+    Animator anime;
     controller2D controller;
     player_lifebar player_lifebar;
-    Animator anime;
+    bullet_behavior bullet_instance;
+    public bullet_behavior bullet;
 
     Vector2 directionalInput;
     bool wallSliding;
+    bool dashing;
     int wallDirX;
+    float timeToDash;
+    public float initTimeToDash;
 
     void Start()
     {
         player_lifebar = GameObject.Find("player").GetComponent<player_lifebar>();
+        bullet_instance = null;
+        timeToDash = initTimeToDash;
         controller = GetComponent<controller2D>();
         anime = GetComponentInChildren<Animator>();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -49,6 +58,7 @@ public class player_behaviour : MonoBehaviour
         CalculateVelocity();
         HandleWallSliding();
         animatorPlayerControl();
+        HandleDashing();
 
         transform.localScale = new Vector3(controller.collisions.faceDir, 1, 1);
         controller.Move(velocity * Time.deltaTime, directionalInput);
@@ -63,6 +73,17 @@ public class player_behaviour : MonoBehaviour
             {
                 velocity.y = 0;
             }
+        }
+    }
+
+    public void Shoot()
+    {
+        if (GameObject.FindGameObjectsWithTag("HeroBullet").Length < bullet_max)
+        {
+            Vector3 bullet_position = (transform.localScale.x == 1) ? new Vector3(0.41f, 0.15f, 0) : new Vector3(-0.41f, 0.15f, 0);
+            bullet_position += transform.position;
+            bullet_instance = Instantiate(bullet, bullet_position, Quaternion.identity);
+            bullet_instance.velocity = (transform.localScale.x == 1) ? new Vector3(10, 0, 0) : new Vector3(-10, 0, 0);
         }
     }
 
@@ -105,6 +126,27 @@ public class player_behaviour : MonoBehaviour
         }
     }
 
+    public void Dash()
+    {
+        if (controller.collisions.below && velocity.x < 10)
+        {
+            dashing = true;
+        }
+    }
+
+    void HandleDashing(){
+        if(dashing){
+            int faceDir = controller.collisions.faceDir;
+            if(timeToDash <= 0){
+                dashing = false;
+                timeToDash = initTimeToDash;
+            } else {
+                timeToDash -= Time.deltaTime;
+                velocity.x = Mathf.SmoothDamp(velocity.x, dashSpeed * faceDir, ref velocityXSmoothing, accelerationTimeGrounded);
+            }
+        }
+    }
+
     void HandleWallSliding()
     {
         wallSliding = false;
@@ -142,7 +184,7 @@ public class player_behaviour : MonoBehaviour
     void CalculateVelocity()
     {
         float targetVelocityX = directionalInput.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below || dashing) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
     }
 
@@ -151,6 +193,8 @@ public class player_behaviour : MonoBehaviour
     {
         anime.SetFloat("walk", directionalInput.x);
         anime.SetBool("wall_jump", wallSliding);
+        anime.SetBool("dash", dashing);
+        anime.SetBool("fire", (bullet_instance) ? true : false);
         anime.SetBool("parado", directionalInput.x == 0);
         anime.SetBool("mode_s", controller.collisions.faceDir == -1);
 
@@ -164,41 +208,5 @@ public class player_behaviour : MonoBehaviour
             anime.SetBool("jumping", (velocity.y >= 0));
             anime.SetBool("falling", (velocity.y < 0));
         }
-
-        /*          
-                    if (transform.localScale.x == 1)
-                    {
-                        anime.SetBool("mode_s", false);
-                    }
-                    else if (transform.localScale.x == -1)
-                    {
-                        anime.SetBool("mode_s", true);
-                    }
-                    if (Input.GetKeyDown("z"))
-                    {
-                        canShootAgain = false;
-                        timeToShootAgain = 0;
-                    }
-                    if (canShootAgain == false)
-                    {
-                        anime.SetBool("fire", true);
-                        timeToShootAgain += Time.deltaTime;
-                        if (timeToShootAgain > 1.0f)
-                        {
-                            canShootAgain = true;
-                            anime.SetBool("fire", false);
-                            timeToShootAgain = 0;
-                            yield break;
-                        }
-                    }
-
-                    if (canDash != true)
-                    {
-                        anime.SetBool("dash", true);
-                    }
-                    else
-                    {
-                        anime.SetBool("dash", false);
-                    } */
     }
 }
