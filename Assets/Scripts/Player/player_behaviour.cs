@@ -57,7 +57,7 @@ public class player_behaviour : MonoBehaviour
     {
         CalculateVelocity();
         HandleWallSliding();
-        animatorPlayerControl();
+        AnimatorPlayerControl();
         HandleDashing();
 
         transform.localScale = new Vector3(controller.collisions.faceDir, 1, 1);
@@ -67,7 +67,14 @@ public class player_behaviour : MonoBehaviour
         {
             if (!controller.collisions.slidingDownMaxSlope)
             {
-                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                if (controller.collisions.climbingSlope || controller.collisions.descendingSlope)
+                {
+                    velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                }
+                else
+                {
+                    velocity.y = controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
+                }
             }
             else
             {
@@ -189,7 +196,7 @@ public class player_behaviour : MonoBehaviour
     }
 
 
-    void animatorPlayerControl()
+    void AnimatorPlayerControl()
     {
         anime.SetFloat("walk", directionalInput.x);
         anime.SetBool("wall_jump", wallSliding);
@@ -198,7 +205,7 @@ public class player_behaviour : MonoBehaviour
         anime.SetBool("parado", directionalInput.x == 0);
         anime.SetBool("mode_s", controller.collisions.faceDir == -1);
 
-        if (controller.collisions.below)
+        if (controller.collisions.below || controller.collisions.climbingSlope || controller.collisions.descendingSlope)
         {
             anime.SetBool("jumping", false);
             anime.SetBool("falling", false);
@@ -206,7 +213,7 @@ public class player_behaviour : MonoBehaviour
         else
         {
             anime.SetBool("jumping", (velocity.y >= 0));
-            anime.SetBool("falling", (velocity.y < 0));
+            anime.SetBool("falling", (velocity.y < -1));
         }
     }
 }
