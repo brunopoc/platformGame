@@ -7,21 +7,24 @@ public class menu : MonoBehaviour
     scenes_manager ScenesManager;
     fade_behaviour FadeInOutBehaviour;
 
-    public void NewGame () {
+    public void NewGame()
+    {
         ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
         FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
         ScenesManager.newGame = true;
         FadeInOutBehaviour.playfadeOut = true;
     }
 
-    public void LoadGame (){
+    public void LoadGame()
+    {
         ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
         FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
         ScenesManager.loadGame = true;
         FadeInOutBehaviour.playfadeOut = true;
     }
 
-    public void QuitGame (){
-	    Application.Quit();
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
