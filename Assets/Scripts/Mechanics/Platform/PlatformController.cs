@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class platform_controller : raycast_controller
+public class PlatformController : RaycastController
 {
 
     public LayerMask passengerMask;
@@ -21,7 +21,7 @@ public class platform_controller : raycast_controller
     float nextMoveTime;
 
     List<PassengerMovement> passengerMovements;
-    Dictionary<Transform, controller2D> passengerDictionary = new Dictionary<Transform, controller2D>();
+    Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
 
     public override void Start()
     {
@@ -94,7 +94,7 @@ public class platform_controller : raycast_controller
         {
             if (!passengerDictionary.ContainsKey(passenger.transform))
             {
-                passengerDictionary.Add(passenger.transform, passenger.transform.GetComponent<controller2D>());
+                passengerDictionary.Add(passenger.transform, passenger.transform.GetComponent<Controller2D>());
             }
             if (passenger.moveBeforePlatform == beforeMovePlatform)
             {

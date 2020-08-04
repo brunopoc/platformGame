@@ -3,10 +3,10 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class data_behaviour : MonoBehaviour
+public class DataBehaviour : MonoBehaviour
 {
 
-    static data_behaviour instanceRef;
+    static DataBehaviour instanceRef;
 
     int levelsFinish;
     int crystalCollect;
@@ -14,12 +14,12 @@ public class data_behaviour : MonoBehaviour
     int currentLifes;
 
     public int slotToSave = 1;
-    public player_lifebar player_lifebar;
-    public scenes_manager ScenesManager;
+    public PlayerLifebar player_lifebar;
+    public ScenesManager scenesManager;
 
     void Start()
     {
-        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
+        scenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
         if (instanceRef == null)
         {
             instanceRef = this;

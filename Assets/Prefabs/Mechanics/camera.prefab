@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 801128832327969563}
   - component: {fileID: 788035317063129153}
   - component: {fileID: 754348246092510917}
-  - component: {fileID: 816936141153477917}
+  - component: {fileID: -2776881834939904188}
   m_Layer: 0
-  m_Name: camera
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815330801430726991}
   m_Enabled: 1
---- !u!114 &816936141153477917
+--- !u!114 &-2776881834939904188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,12 +102,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 815330801430726991}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce5a48dc6df9194a8a56f54ae7a193f, type: 3}
+  m_Script: {fileID: 11500000, guid: 57671bc1766020e4696a5556b4d5908e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  focusAreaSize: {x: 2, y: 3}
-  lookAheadDstX: 0.6
-  lookSmoothTimeX: 0.2
-  verticalSmoothTime: 0.06
-  verticalOffset: 0.06
+  focusAreaSize: {x: 2, y: 2.5}
+  lookAheadDstX: 1.2
+  lookSmoothTimeX: 0.8
+  verticalSmoothTime: 0.3
+  verticalOffset: -0.2

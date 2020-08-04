@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4422442977393060}
   - component: {fileID: 212857451252128404}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 50859634079654672}
   - component: {fileID: 114207355842265800}
   m_Layer: 0
-  m_Name: mouse
+  m_Name: Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1810148218935968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f00d6fb80c2361d48ae1af429a2a2ee0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7df85292e2ad6f64387702c153bb6bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {fileID: 1810148218935968}
+  position: {fileID: 1233392626338800}

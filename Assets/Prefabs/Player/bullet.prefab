@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 212053162942795804}
   - component: {fileID: 231504889423575711}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: Bullet
   m_TagString: HeroBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1155513369593360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 326685536c98a6848b44a94701ca70d0, type: 3}
+  m_Script: {fileID: 11500000, guid: decaf40a4c91fd743bd1d7892eed0037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 2, y: 0, z: 0}

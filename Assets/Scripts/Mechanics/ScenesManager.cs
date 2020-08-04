@@ -2,18 +2,18 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class scenes_manager : MonoBehaviour
+public class ScenesManager : MonoBehaviour
 {
-    static scenes_manager instanceRef;
+    static ScenesManager instanceRef;
 
-    public bool newGame;
+    public bool newGame; 
     public bool loadGame;
 
     public bool sceneMenu;
     public bool sceneGamePlay;
 
-    fade_behaviour FadeInOutBehaviour;
-    data_savenload dataSaveNLoad;
+    FadeBehaviour FadeInOutBehaviour;
+    DataSavenload dataSaveNLoad;
 
     public Scene activeScene;
 
@@ -34,7 +34,7 @@ public class scenes_manager : MonoBehaviour
 
     void loadCurrentFade()
     {
-        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
+        FadeInOutBehaviour = GameObject.Find("FadeInOut").GetComponent<FadeBehaviour>();
     }
 
     void callFadeOut()
@@ -60,7 +60,7 @@ public class scenes_manager : MonoBehaviour
                     callFadeIn();
                     break;
                 case "SavenLoad":
-                    dataSaveNLoad = GameObject.Find("UI").GetComponent<data_savenload>();
+                    dataSaveNLoad = GameObject.Find("UI").GetComponent<DataSavenload>();
                     if (newGame == true)
                     {
                         dataSaveNLoad.newgameOption = true;

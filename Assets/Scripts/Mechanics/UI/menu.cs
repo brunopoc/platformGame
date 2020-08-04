@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class menu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
-    scenes_manager ScenesManager;
-    fade_behaviour FadeInOutBehaviour;
+    ScenesManager ScenesManager;
+    FadeBehaviour FadeInOutBehaviour;
 
     public void NewGame()
     {
-        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
-        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
+        ScenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
+        FadeInOutBehaviour = GameObject.Find("FadeInOut").GetComponent<FadeBehaviour>();
         ScenesManager.newGame = true;
         FadeInOutBehaviour.playfadeOut = true;
     }
 
     public void LoadGame()
     {
-        ScenesManager = GameObject.Find("scene_manager").GetComponent<scenes_manager>();
-        FadeInOutBehaviour = GameObject.Find("fade_in_out").GetComponent<fade_behaviour>();
+        ScenesManager = GameObject.Find("SceneManager").GetComponent<ScenesManager>();
+        FadeInOutBehaviour = GameObject.Find("FadeInOut").GetComponent<FadeBehaviour>();
         ScenesManager.loadGame = true;
         FadeInOutBehaviour.playfadeOut = true;
     }

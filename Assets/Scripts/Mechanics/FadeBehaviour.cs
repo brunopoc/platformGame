@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class fade_behaviour : MonoBehaviour
+public class FadeBehaviour : MonoBehaviour
 {
+    //REMOVE TRANSPARENCI FROM SPRIT RENDERER COLOR
     public Color colorStart;
     public Color colorEnd;
     public Renderer renderoption;

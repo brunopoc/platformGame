@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(player_behaviour))]
-public class player_input : MonoBehaviour
+[RequireComponent(typeof(PlayerBehaviour))]
+public class PlayerInput : MonoBehaviour
 {
 
-    player_behaviour Player;
+    PlayerBehaviour Player;
 
     void Start()
     {
-        Player = GetComponent<player_behaviour>();
+        Player = GetComponent<PlayerBehaviour>();
     }
 
     void Update()
@@ -26,13 +26,17 @@ public class player_input : MonoBehaviour
         {
             Player.OnJumpInputUp();
         }
-        if (Input.GetKeyDown("z"))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             Player.Shoot();
         }
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            Player.Dash();
+            Player.OnDashInputDown();
+        }
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            Player.OnDashInputUp();
         }
     }
 

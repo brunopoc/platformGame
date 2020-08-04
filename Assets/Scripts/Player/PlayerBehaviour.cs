@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(controller2D))]
-public class player_behaviour : MonoBehaviour
+[RequireComponent(typeof(Controller2D))]
+public class PlayerBehaviour : MonoBehaviour
 {
 
     public float maxJumpHeight = 1.5f;
@@ -29,24 +29,23 @@ public class player_behaviour : MonoBehaviour
     Vector3 velocity;
 
     Animator anime;
-    controller2D controller;
-    player_lifebar player_lifebar;
-    bullet_behavior bullet_instance;
-    public bullet_behavior bullet;
+    Controller2D controller;
+    PlayerLifebar player_lifebar;
+    BulletBehavior bullet_instance;
+    public BulletBehavior bullet;
 
     Vector2 directionalInput;
     bool wallSliding;
     bool dashing;
     int wallDirX;
-    float timeToDash;
     public float initTimeToDash;
+    float timeToDash;
 
     void Start()
     {
-        player_lifebar = GameObject.Find("player").GetComponent<player_lifebar>();
+        player_lifebar = GameObject.Find("player").GetComponent<PlayerLifebar>();
         bullet_instance = null;
-        timeToDash = initTimeToDash;
-        controller = GetComponent<controller2D>();
+        controller = GetComponent<Controller2D>();
         anime = GetComponentInChildren<Animator>();
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -57,8 +56,8 @@ public class player_behaviour : MonoBehaviour
     {
         CalculateVelocity();
         HandleWallSliding();
-        AnimatorPlayerControl();
         HandleDashing();
+        AnimatorPlayerControl();
 
         transform.localScale = new Vector3(controller.collisions.faceDir, 1, 1);
         controller.Move(velocity * Time.deltaTime, directionalInput);
@@ -105,17 +104,17 @@ public class player_behaviour : MonoBehaviour
         {
             if (wallDirX == directionalInput.x)
             {
-                velocity.x = -wallDirX * wallJumpClimb.x;
+                velocity.x = -wallDirX * (wallJumpClimb.x + (dashing ? dashSpeed : 0));
                 velocity.y = wallJumpClimb.y;
             }
             else if (directionalInput.x == 0)
             {
-                velocity.x = -wallDirX * wallJumpOff.x;
+                velocity.x = -wallDirX * (wallJumpOff.x + (dashing ? dashSpeed : 0));
                 velocity.y = wallJumpOff.y;
             }
             else
             {
-                velocity.x = -wallDirX * wallLeap.x;
+                velocity.x = -wallDirX * (wallLeap.x + (dashing ? dashSpeed : 0));
                 velocity.y = wallLeap.y;
             }
         }
@@ -133,24 +132,42 @@ public class player_behaviour : MonoBehaviour
         }
     }
 
-    public void Dash()
+    public void OnDashInputUp()
     {
-        if (controller.collisions.below && velocity.x < 10)
-        {
+        dashing = false;
+        timeToDash = 0;
+        if(moveSpeed > dashSpeed)
+            moveSpeed = moveSpeed - dashSpeed;
+    }
+
+    public void OnDashInputDown(){
+
+        if(controller.collisions.below){
             dashing = true;
+            moveSpeed += dashSpeed; 
+            timeToDash = initTimeToDash;
+        }
+
+        if (wallSliding){ 
+            dashing = true;
+            timeToDash = 0;
         }
     }
 
-    void HandleDashing(){
+    public void HandleDashing()
+    {
         if(dashing){
-            int faceDir = controller.collisions.faceDir;
-            if(timeToDash <= 0){
-                dashing = false;
-                timeToDash = initTimeToDash;
-            } else {
+            if(timeToDash > 0){
                 timeToDash -= Time.deltaTime;
-                velocity.x = Mathf.SmoothDamp(velocity.x, dashSpeed * faceDir, ref velocityXSmoothing, accelerationTimeGrounded);
+                if(timeToDash <= 0) {
+                    dashing = false;
+                    if(moveSpeed > dashSpeed)
+                        moveSpeed = moveSpeed - dashSpeed;
+                }
             }
+            if(controller.collisions.below && timeToDash <= 0){
+                timeToDash = initTimeToDash;
+            } 
         }
     }
 

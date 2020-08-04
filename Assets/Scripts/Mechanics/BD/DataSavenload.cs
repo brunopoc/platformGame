@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class data_savenload : MonoBehaviour
+public class DataSavenload : MonoBehaviour
 {
     int levelsFinish;
     int crystalCollect;

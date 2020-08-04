@@ -2,20 +2,20 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class dialog : MonoBehaviour
+public class Dialog : MonoBehaviour
 {
 
     public Text dialogText; //Campo de Texo do Hud
     private string str; //Variável que o método utiliza para passar o texto para o componente de texto do HUD
     Animator anima; //Animação que exibe o campo de dialogo
 
-    public static bool hasFinishCheck; //Booleana que verifica se o dialogo já acabou
+    public bool hasFinishCheck; //Booleana que verifica se o dialogo já acabou
     public bool pressButtonZ; //Verifica se o botão Z foi pressionado e pula a conversa para o fim
     public bool checkButtonZ;
     public int i;
     public int timeToCont;
     public float countDelay;
-    public static string animaAction;
+    public string animaAction;
 
 
     public bool showDiolog; //Booleana que controlá quando  dialogo deve ser mostrado

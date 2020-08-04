@@ -259,11 +259,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: {fileID: 8868070175282913498}
+  hasFinishCheck: 0
   pressButtonZ: 0
   checkButtonZ: 0
   i: 0
   timeToCont: 0
   countDelay: 0
+  animaAction: 
   showDiolog: 0
   MyMsg: 
   nameChar: 
@@ -279,7 +281,7 @@ GameObject:
   - component: {fileID: 8760229918240624124}
   - component: {fileID: 8867668050015408548}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Life 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +392,7 @@ GameObject:
   - component: {fileID: 8760053506408432958}
   - component: {fileID: 8867852174633976740}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Life 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,7 +544,7 @@ GameObject:
   - component: {fileID: 8759997309552483616}
   - component: {fileID: 8867823932889822874}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Life 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,7 +618,7 @@ GameObject:
   - component: {fileID: 8763521037791378704}
   - component: {fileID: 8871599364981158316}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: Life 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -687,6 +689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8762671321359956278}
+  - component: {fileID: 89123339}
   m_Layer: 5
   m_Name: life
   m_TagString: Untagged
@@ -717,3 +720,20 @@ RectTransform:
   m_AnchoredPosition: {x: 79, y: -43}
   m_SizeDelta: {x: 137, y: 57}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &89123339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828646453057282728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a862428b15b20154d9efce18962f4dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life00: {fileID: 8828080258045211510}
+  life01: {fileID: 8827854946532883516}
+  life02: {fileID: 8827773790171886100}
+  life03: {fileID: 8827744558993662932}
+  currentlife: 0

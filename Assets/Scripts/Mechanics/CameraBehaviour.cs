@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class camera_behaviour : MonoBehaviour
+public class CameraBehaviour : MonoBehaviour
 {
 
-    public controller2D target;
+    public Controller2D target;
     public Vector2 focusAreaSize;
     public float lookAheadDstX;
     public float lookSmoothTimeX;

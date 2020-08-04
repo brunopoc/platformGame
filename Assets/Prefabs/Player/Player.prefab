@@ -274,10 +274,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2976784786830296795}
   - component: {fileID: 2976784786830296796}
-  - component: {fileID: 2976784786830296797}
-  - component: {fileID: 2976784785430357504}
-  - component: {fileID: 2976784786830296798}
-  - component: {fileID: 107025230}
+  - component: {fileID: 9209826580162343986}
+  - component: {fileID: 6162440945090575132}
+  - component: {fileID: 119559075453485629}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -327,24 +326,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.17, y: 0.72}
   m_EdgeRadius: 0
---- !u!114 &2976784786830296797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2976784786830296799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f19629221bb08b0479312e339cc61613, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life00: {fileID: 0}
-  life01: {fileID: 0}
-  life02: {fileID: 0}
-  life03: {fileID: 0}
-  currentlife: 3
---- !u!114 &2976784785430357504
+--- !u!114 &9209826580162343986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,13 +342,13 @@ MonoBehaviour:
   verticalRayCount: 4
   collisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1
   horizontalRaySpacing: 0
   verticalRaySpacing: 0
   collider: {fileID: 0}
-  maxSlopeAngle: 60
+  maxSlopeAngle: 55
   playerInput: {x: 0, y: 0}
---- !u!114 &2976784786830296798
+--- !u!114 &6162440945090575132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -375,21 +357,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2976784786830296799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f775502055eb7264d835b7b40b7c9452, type: 3}
+  m_Script: {fileID: 11500000, guid: 1af0475864c698b4f8d4b38c49a492ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxJumpHeight: 1.5
   minJumpHeight: 0.5
   timeToJumpApex: 0.4
   dashSpeed: 15
-  wallJumpClimb: {x: 5, y: 7}
-  wallJumpOff: {x: 4, y: 4}
-  wallLeap: {x: 5, y: 5}
+  wallJumpClimb: {x: 4, y: 6}
+  wallJumpOff: {x: 2, y: 4}
+  wallLeap: {x: 4, y: 6}
   wallSlideSpeedMax: 1
   wallStickTime: 0.25
   bullet: {fileID: 231504889423575711, guid: 034a0d80113cc7d4da4f2dc2f843e333, type: 3}
-  initTimeToDash: 0.4
---- !u!114 &107025230
+  initTimeToDash: 0.2
+--- !u!114 &119559075453485629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,6 +380,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2976784786830296799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb2247722b09c6b46b79b494de5a0751, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c9c40b8c097dbc41bdcab624c66451a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

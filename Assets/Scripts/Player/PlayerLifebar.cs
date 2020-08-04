@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class player_lifebar : MonoBehaviour
+public class PlayerLifebar : MonoBehaviour
 {
 
     public GameObject life00;
